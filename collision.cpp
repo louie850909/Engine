@@ -126,4 +126,6 @@ bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start
 
 	n3 = XMVector3Cross(v6, v3);
 	if (XMVectorGetX(XMVector3Dot(n3, nor)) < 0.0f) return(false);	// 当たっていない
+
+	return(true);	// 当たっている！(hitには当たっている交点が入っている。normalには法線が入っている)
 }
