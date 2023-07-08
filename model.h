@@ -156,6 +156,7 @@ public:
 	std::vector<material> materials;
 
 	std::vector<vertex> vertices;
+	std::vector<vertex> vertices_world;
 	std::vector<uint32_t> indices;
 	XMMATRIX world_matrix;
 

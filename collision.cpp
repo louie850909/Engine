@@ -23,36 +23,43 @@ bool Collision::CylinderVsCylinder(const XMFLOAT3& pos1, float radius1, float he
 
 bool Collision::RayVsStaticModel(const XMFLOAT3& start, const XMFLOAT3& end, const static_mesh* mesh, HitResult& result)
 {
-	XMVECTOR WorldStart = XMLoadFloat3(&start);
-	XMVECTOR WorldEnd = XMLoadFloat3(&end);
-	XMVECTOR WorldRayVec = XMVectorSubtract(WorldEnd, WorldStart);
-	XMVECTOR WorldRayLength = XMVector3Length(WorldRayVec);
+	/*float length = XMVectorGetX(XMVector3Length(XMLoadFloat3(&start) - XMLoadFloat3(&result.Pos)));
+	float rayLengthsqr = length * length;*/
 
-	result.Distance = XMVectorGetX(WorldRayLength);
-
-	bool hit = false;
-
-	for (uint32_t i = 0; i < mesh->indices.size(); i+=3)
+	for (uint32_t i = 0; i < mesh->subsets.size(); i++)
 	{
-		// ポリゴンの頂点を取得
-		XMVECTOR p0 = XMLoadFloat3(&mesh->vertices[mesh->indices[i]].position);
-		XMVECTOR p1 = XMLoadFloat3(&mesh->vertices[mesh->indices[i + 1]].position);
-		XMVECTOR p2 = XMLoadFloat3(&mesh->vertices[mesh->indices[i + 2]].position);
-
-		// ワールド座標に変換
-		XMFLOAT3 p0w, p1w, p2w;
-		XMStoreFloat3(&p0w ,XMVector3TransformCoord(p0, mesh->world_matrix));
-		XMStoreFloat3(&p1w, XMVector3TransformCoord(p1, mesh->world_matrix));
-		XMStoreFloat3(&p2w, XMVector3TransformCoord(p2, mesh->world_matrix));
-
-		// レイとポリゴンの衝突判定
-		if (RayCast(p0w, p1w, p2w, start, end, &result.Pos, &result.Normal))
+		for (uint32_t j = 0; j < mesh->subsets.at(i).index_count; j+=3)
 		{
-			hit = true;
+			// 頂点インデックスを取得
+			uint32_t index0 = mesh->indices.at(mesh->subsets.at(i).index_start + j + 0);
+			uint32_t index1 = mesh->indices.at(mesh->subsets.at(i).index_start + j + 1);
+			uint32_t index2 = mesh->indices.at(mesh->subsets.at(i).index_start + j + 2);
+
+			// 頂点座標を取得
+			XMFLOAT3 p0w = mesh->vertices_world.at(index0).position;
+			XMFLOAT3 p1w = mesh->vertices_world.at(index1).position;
+			XMFLOAT3 p2w = mesh->vertices_world.at(index2).position;
+
+			float lengthToV0 = powf(p0w.x - start.x, 2) + powf(p0w.y - start.y, 2) + powf(p0w.z - start.z, 2);
+			float lengthToV1 = powf(p1w.x - start.x, 2) + powf(p1w.y - start.y, 2) + powf(p1w.z - start.z, 2);
+			float lengthToV2 = powf(p2w.x - start.x, 2) + powf(p2w.y - start.y, 2) + powf(p2w.z - start.z, 2);
+
+			//// 頂点からレイまでの距離がレイの長さより長い場合は当たらない
+			//if (lengthToV0 > rayLengthsqr || lengthToV1 > rayLengthsqr || lengthToV2 > rayLengthsqr)
+			//{
+			//	continue;
+			//}
+
+			// レイと三角形の当たり判定
+			if (RayCast(p0w, p1w, p2w, start, end, &result.Pos, &result.Normal))
+			{
+				result.Distance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&start) - XMLoadFloat3(&result.Pos)));
+				return true;
+			}
 		}
 	}
 
-	return hit;
+	return false;
 }
 
 bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start, XMFLOAT3 end, XMFLOAT3* hit, XMFLOAT3* normal)
@@ -68,36 +75,36 @@ bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start
 	XMVECTOR	vec2;
 	float		d1, d2;
 
-	// ポリゴンの外積をとって法線を求める
+	// ポリゴンの外積をとって法線を求める(この処理は固定物なら予めInit()で行っておくと良い)
 	vec1 = p1 - p0;
 	vec2 = p2 - p0;
-	nor = XMVector3Cross(vec1, vec2);
-	nor = XMVector3Normalize(nor);
-	XMStoreFloat3(normal, nor);
+	nor = XMVector3Cross(vec2, vec1);
+	nor = XMVector3Normalize(nor);			// 計算しやすいように法線をノーマライズしておく(このベクトルの長さを１にしている)
+	XMStoreFloat3(normal, nor);	// 求めた法線を入れておく
 
 	// ポリゴン平面と線分の内積とって衝突している可能性を調べる（鋭角なら＋、鈍角ならー、直角なら０）
 	vec1 = pos0 - p0;
 	vec2 = pos1 - p0;
 	// 求めたポリゴンの法線と２つのベクトル（線分の両端とポリゴン上の任意の点）の内積とって衝突している可能性を調べる
-	d1 = XMVectorGetX(XMVector3Dot(nor, vec1));
-	d2 = XMVectorGetX(XMVector3Dot(nor, vec2));
+	d1 = XMVectorGetX(XMVector3Dot(vec1, nor));
+	d2 = XMVectorGetX(XMVector3Dot(vec2, nor));
 	if (((d1 * d2) > 0.0f) || (d1 == 0 && d2 == 0))
 	{
-		// 両方の内積の符号が同じなら衝突していない
-		return false;
+		// 当たっている可能性は無い
+		return(false);
 	}
 
 	// ポリゴンと線分の交点を求める
 	d1 = (float)fabs(d1);	// 絶対値を求めている
 	d2 = (float)fabs(d2);	// 絶対値を求めている
-	float a = d1 / (d1 + d2);	// 内分比
+	float a = d1 / (d1 + d2);							// 内分比
 
-	// 交点を求める
 	XMVECTOR	vec3 = (1 - a) * vec1 + a * vec2;		// p0から交点へのベクトル
 	XMVECTOR	p3 = p0 + vec3;							// 交点
-	XMStoreFloat3(hit, p3);				// 求めた交点を入れておく
+	XMStoreFloat3(hit, p3);								// 求めた交点を入れておく
 
 	// 求めた交点がポリゴンの中にあるか調べる
+
 	// ポリゴンの各辺のベクトル
 	XMVECTOR	v1 = p1 - p0;
 	XMVECTOR	v2 = p2 - p1;
@@ -111,14 +118,12 @@ bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start
 	// 外積で各辺の法線を求めて、ポリゴンの法線との内積をとって符号をチェックする
 	XMVECTOR	n1, n2, n3;
 
-	n1 = XMVector3Cross(v1,v4);
-	if (XMVectorGetX(XMVector3Dot(n1, nor)) < 0.0f) return false;	// 当たっていない
+	n1 = XMVector3Cross( v4, v1);
+	if (XMVectorGetX(XMVector3Dot(n1, nor)) < 0.0f) return(false);	// 当たっていない
 
 	n2 = XMVector3Cross(v5, v2);
-	if (XMVectorGetX(XMVector3Dot(n2, nor)) < 0.0f) return false;	// 当たっていない
+	if (XMVectorGetX(XMVector3Dot(n2, nor)) < 0.0f) return(false);	// 当たっていない
 
 	n3 = XMVector3Cross(v6, v3);
-	if (XMVectorGetX(XMVector3Dot(n3, nor)) < 0.0f) return false;	// 当たっていない
-
-	return true;	// 当たっている！(hitには当たっている交点が入っている。normalには法線が入っている)
+	if (XMVectorGetX(XMVector3Dot(n3, nor)) < 0.0f) return(false);	// 当たっていない
 }

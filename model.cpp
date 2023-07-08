@@ -374,6 +374,15 @@ static_mesh::static_mesh(ID3D11Device* device, const wchar_t* obj_filename, XMFL
 	t = XMMatrixTranslation(position.x, position.y, position.z);
 	w = t * w;
 	world_matrix = w;
+
+	// レイキャストのためワールド座標頂点を保存
+	for (auto& v : vertices)
+	{
+		vertex _v;
+		XMVECTOR vec = XMVector3Transform(XMLoadFloat3(&v.position), w);
+		_v.position = XMFLOAT3(XMVectorGetX(vec), XMVectorGetY(vec), XMVectorGetZ(vec));
+		vertices_world.push_back(_v);
+	}
 }
 
 static_mesh::~static_mesh()
@@ -390,6 +399,7 @@ static_mesh::~static_mesh()
 	delete input_layout.Get();
 	delete constant_buffer.Get();
 	vertices.clear();
+	vertices_world.clear();
 	indices.clear();
 }
 
