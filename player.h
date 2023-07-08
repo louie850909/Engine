@@ -1,49 +1,24 @@
 #pragma once
 #include "model.h"
+#include "character.h"
 #include "Input.h"
 #include "camera.h"
 #include "DebugRenderer.h"
 #include "collision.h"
 
-class PLAYER
+class PLAYER : public Character
 {
 public:
-	render* Render;
-
-	int clip_index;
-	int frame_index;
-	float animation_tick;
-	bool animation_loop;
-	animation::keyframe keyframe;
-	const animation::keyframe* blendframes[2];
-	float blendSecond;
-	float blendTick;
-
-	XMFLOAT3 position;
-	XMFLOAT3 rotation;
-	XMFLOAT3 scale;
-
-	float collision_radius;
-	float collision_height;
-
-	std::unique_ptr<skinned_mesh> mesh;
-
 	PLAYER(render* Rneder);
 	~PLAYER();
 
-	void initialize();
-	void update(float elapsed_time);
-	void draw(float elapsed_time);
-	void uninitialize();
-
-	void playAnimation(int clip_index, bool loop, float blendSec);
-	bool isPlayAnimation();
-	void updateAnimation(float elapsed_time);
+	void initialize() override;
+	void update(float elapsed_time) override;
+	void draw(float elapsed_time) override;
+	void uninitialize() override;
 
 	bool InputMove(float elapsed_time);
 	bool InputJump(float elapsed_time);
-
-	void drawDebugPrimitive();
 private:
 	enum class State
 	{

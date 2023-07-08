@@ -4,7 +4,7 @@
 #include "camera.h"
 #include "stage.h"
 
-PLAYER::PLAYER(render* Render)
+PLAYER::PLAYER(render* Render) : Character(Render)
 {
 	this->Render = Render;
 	position = XMFLOAT3(0.0f, 30.0f, 0.0f);
@@ -94,65 +94,6 @@ void PLAYER::uninitialize()
 {
 }
 
-void PLAYER::playAnimation(int clip_index, bool loop, float blendSec)
-{
-	this->clip_index = clip_index;
-	animation_tick = 0.0f;
-	animation_loop = loop;
-	blendSecond = blendSec;
-}
-
-bool PLAYER::isPlayAnimation()
-{
-	if (animation_tick < 0)
-		return false;
-	if (animation_tick >= mesh->animation_clips.at(clip_index).sequence.size() - 1)
-		return false;
-	return true;
-}
-
-void PLAYER::updateAnimation(float elapsed_time)
-{
-	animation& animation = mesh->animation_clips.at(clip_index);
-	if (blendSecond != 0)
-	{
-		blendTick += elapsed_time;
-		float blendRate = blendTick / blendSecond;
-		if (blendRate < 1.0f)
-		{
-			mesh->blend_animations(blendframes, blendRate, keyframe);
-			mesh->update_animation(keyframe);
-		}
-		else
-		{
-			blendSecond = 0.0f;
-			blendTick = 0.0f;
-		}
-	}
-	else
-	{
-		frame_index = static_cast<int>(animation_tick * animation.sampling_rate);
-		if (frame_index >= animation.sequence.size() - 1)
-		{
-			if (animation_loop)
-			{
-				frame_index = 0;
-				animation_tick = 0.0f;
-			}
-			else
-			{
-				frame_index = animation.sequence.size() - 1;
-				animation_tick = static_cast<float>(frame_index) / animation.sampling_rate;
-			}
-		}
-		else
-		{
-			animation_tick += elapsed_time;
-		}
-		keyframe = animation.sequence.at(frame_index);
-	}
-}
-
 bool PLAYER::InputMove(float elapsed_time)
 {
 	XMFLOAT3 prePos = position;
@@ -184,14 +125,6 @@ bool PLAYER::InputJump(float elapsed_time)
 	if (gamePad.GetButtonDown() == gamePad.BTN_LEFT_SHOULDER)
 		return true;
 	return false;
-}
-
-void PLAYER::drawDebugPrimitive()
-{
-	DebugRenderer* debugRenderer = Render->get_debug_renderer();
-
-	// デバッグ用に球を描画する
-	debugRenderer->DrawCylinder(position, collision_radius, collision_height, XMFLOAT4(0, 0, 0, 1));
 }
 
 void PLAYER::toIdle()
