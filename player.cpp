@@ -72,11 +72,11 @@ void PLAYER::update(float elapsed_time)
 	updateAnimation(elapsed_time);
 
 	HitResult hitResult;
-	if (Collision::RayVsStaticModel(XMFLOAT3(position.x, position.y + 100.0f, position.z),
+	/*if (Collision::RayVsStaticModel(XMFLOAT3(position.x, position.y + 100.0f, position.z),
 		XMFLOAT3(position.x, position.y - 100.0f, position.z), STAGE::Instance().mesh.get(), hitResult))
 	{
 		position.y = hitResult.Pos.y;
-	}
+	}*/
 
 
 	mesh.get()->position = position;

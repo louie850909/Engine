@@ -11,6 +11,7 @@ public :
 	XMFLOAT3 scale;
 
 	std::unique_ptr<static_mesh> mesh;
+	std::unique_ptr<skinned_mesh> skinnedMesh;
 
 	STAGE(render* Render);
 	~STAGE();
