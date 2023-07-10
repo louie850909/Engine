@@ -309,7 +309,6 @@ public:
 
 
 	skinned_mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate , XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot, float sampling_rate);
-	skinned_mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate, XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot);
 	virtual ~skinned_mesh();
 
 	void fetch_meshes(FbxScene* fbx_scene, std::vector<mesh>& meshes);
@@ -321,9 +320,6 @@ public:
 
 	void make_dummy_material(std::unordered_map<uint64_t, material>& materials);
 
-	void draw(render Render);
-	void draw(render Render, int coordinate_system);
-	void draw(render Render, XMFLOAT4 material_color, int coordinate_system);
 	void draw(render Render, XMFLOAT4 material_color, int coordinate_system, const animation::keyframe* keyframe);
 
 	void update_animation(animation::keyframe& keyframe);

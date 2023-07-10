@@ -2,6 +2,7 @@
 
 #include <DirectXMath.h>
 #include "model.h"
+#include "game_object.h"
 
 using namespace DirectX;
 
@@ -13,8 +14,26 @@ struct HitResult
 	int materialIndex{ -1 };
 };
 
+struct OctreeNode
+{
+	DirectX::XMFLOAT3 center; // Center of the node
+	float size;               // Length of the sides of the node
+	OctreeNode* children[8];  // Child nodes
+	std::vector<GAME_OBJECT::vertex> vertices; // Vertices in this octant
+
+	// Initialize with center and size
+	OctreeNode(DirectX::XMFLOAT3 center, float size)
+		: center(center), size(size)
+	{
+		// Initialize children to null
+		for (int i = 0; i < 8; i++)
+			children[i] = nullptr;
+	}
+};
+
 class Collision
 {
+
 public:
 	// 球と球の当たり判定
 	static bool SphereVsSphere(const XMFLOAT3& pos1, float radius1, const XMFLOAT3& pos2, float radius2);
@@ -26,6 +45,12 @@ public:
 	static bool RayVsStaticModel(	const XMFLOAT3& start, 
 									const XMFLOAT3& end,
 									const static_mesh* mesh,
+									HitResult& result);
+
+	// レイとモデルの当たり判定
+	static bool RayVsSkinnedModel(	const XMFLOAT3& start,
+									const XMFLOAT3& end,
+									const skinned_mesh* mesh,
 									HitResult& result);
 
 	// レイと三角形の当たり判定

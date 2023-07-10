@@ -7,7 +7,7 @@
 PLAYER::PLAYER(render* Render) : Character(Render)
 {
 	this->Render = Render;
-	position = XMFLOAT3(0.0f, 30.0f, 0.0f);
+	position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	rotation = XMFLOAT3(0.0f, XM_PI, 0.0f);
 	scale = XMFLOAT3(0.1f, 0.1f, 0.1f);
 	clip_index = 0;
@@ -42,6 +42,9 @@ void PLAYER::initialize()
 
 void PLAYER::update(float elapsed_time)
 {
+	XMFLOAT3 prePos = position;
+	XMFLOAT3 preRot = rotation;
+
 	switch (state)
 	{
 	case State::Idle:
@@ -59,9 +62,9 @@ void PLAYER::update(float elapsed_time)
 
 #ifdef _DEBUG
 	ImGui::Begin("PLAYER");
-	ImGui::SliderFloat3("Position", &position.x, -100.0f, 100.0f, "%.1f", 0.5f);
-	ImGui::SliderFloat3("Rotation", &rotation.x, -180.0f, 180.0f, "%.1f", 0.5f);
-	ImGui::SliderFloat3("Scale", &scale.x, 0.0f, 10.0f, "%.1f", 0.5f);
+	ImGui::SliderFloat3("Position", &position.x, -1000.0f, 1000.0f, "%.1f");
+	ImGui::SliderFloat3("Rotation", &rotation.x, -180.0f, 180.0f, "%.1f");
+	ImGui::SliderFloat3("Scale", &scale.x, 0.0f, 10.0f, "%.1f");
 	ImGui::SliderInt("Clip Index", &clip_index, 0, mesh->animation_clips.size() - 1);
 	ImGui::SliderInt("Frame Index", &frame_index, 0, mesh->animation_clips.at(clip_index).sequence.size() - 1);
 	ImGui::SliderFloat("Blend Second", &blendSecond, 0.0f, 10.0f, "%.1f", 0.5f);
@@ -72,12 +75,25 @@ void PLAYER::update(float elapsed_time)
 	updateAnimation(elapsed_time);
 
 	HitResult hitResult;
-	/*if (Collision::RayVsStaticModel(XMFLOAT3(position.x, position.y + 100.0f, position.z),
-		XMFLOAT3(position.x, position.y - 100.0f, position.z), STAGE::Instance().mesh.get(), hitResult))
+
+	// °”»’è
+	if (Collision::RayVsSkinnedModel(XMFLOAT3(position.x, position.y + 15.0f, position.z),
+		XMFLOAT3(position.x, position.y - 1.0f, position.z), STAGE::Instance().skinnedMesh.get(), hitResult))
 	{
 		position.y = hitResult.Pos.y;
-	}*/
+	}
+	else
+	{
+		position.y -= 9.8f * 10 * elapsed_time;
+	}
 
+	// •Ç”»’è
+	if (Collision::RayVsSkinnedModel(XMFLOAT3(position.x, position.y + 10.0f, position.z),
+		XMFLOAT3(position.x + sinf(rotation.y) * 3, position.y + 10.0f, position.z + cosf(rotation.y) * 3), 
+		STAGE::Instance().skinnedMesh.get(), hitResult))
+	{
+		position = prePos;
+	}
 
 	mesh.get()->position = position;
 	mesh.get()->rotation = rotation;
@@ -96,9 +112,6 @@ void PLAYER::uninitialize()
 
 bool PLAYER::InputMove(float elapsed_time)
 {
-	XMFLOAT3 prePos = position;
-	XMFLOAT3 preRot = rotation;
-
 	// ƒL[“ü—Í‚ğæ“¾‚·‚é
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	float ax = gamePad.GetAxisLX();

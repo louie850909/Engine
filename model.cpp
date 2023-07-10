@@ -577,11 +577,6 @@ skinned_mesh::skinned_mesh(ID3D11Device* device, const char* fbx_filename, bool 
 	create_com_objects(device, fbx_filename);
 }
 
-skinned_mesh::skinned_mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate, XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot)
-{
-	skinned_mesh(device, fbx_filename, triangulate, pos, scl, rot, 0.0f);
-}
-
 skinned_mesh::~skinned_mesh()
 {
 	for (mesh& mesh : meshes)
@@ -914,85 +909,6 @@ void skinned_mesh::make_dummy_material(std::unordered_map<uint64_t, material>& m
 	materials.emplace(material.unique_id, std::move(material));
 }
 
-void skinned_mesh::draw(render Render)
-{
-	draw(Render, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), LHS_YUP);
-}
-
-void skinned_mesh::draw(render Render, int coordinate_system)
-{
-	draw(Render, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), coordinate_system);
-}
-
-void skinned_mesh::draw(render Render, XMFLOAT4 material_color, int coordinate_system)
-{
-	XMMATRIX world, scl, rot, trans;
-	world = XMMatrixIdentity();
-	scale = XMFLOAT3(XMConvertToRadians(scale.x), XMConvertToRadians(scale.y), XMConvertToRadians(scale.z));
-	scl = XMMatrixScaling(scale.x, scale.y, scale.z);
-	world = scl * world;
-	rot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
-	world = rot * world;
-	trans = XMMatrixTranslation(position.x, position.y, position.z);
-	world = trans * world;
-
-	const DirectX::XMFLOAT4X4 coordinate_system_transforms[]{
-		{ -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },		// 0:RHS Y-UP
-		{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },		// 1:LHS Y-UP
-		{ -1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },	// 2:RHS Z-UP
-		{ 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },		// 3:LHS Z-UP
-	};
-
-	world = DirectX::XMLoadFloat4x4(&coordinate_system_transforms[coordinate_system]) * world;
-
-	if (coordinate_system != 1)
-	{
-		D3D11_RASTERIZER_DESC rasterizer_desc{};
-		rasterizer_desc.FillMode = D3D11_FILL_SOLID;
-		rasterizer_desc.CullMode = D3D11_CULL_BACK;
-		rasterizer_desc.FrontCounterClockwise = true;
-		rasterizer_desc.DepthClipEnable = true;
-		rasterizer_desc.ScissorEnable = false;
-		rasterizer_desc.MultisampleEnable = false;
-		rasterizer_desc.AntialiasedLineEnable = false;
-		ID3D11RasterizerState* rasterizer_state{ nullptr };
-		Render.get_device()->CreateRasterizerState(&rasterizer_desc, &rasterizer_state);
-		Render.get_immediate_context()->RSSetState(rasterizer_state);
-	}
-
-
-	for (const mesh& mesh : meshes)
-	{
-		uint32_t stride{ sizeof(vertex) };
-		uint32_t offset{ 0 };
-		Render.get_immediate_context()->IASetVertexBuffers(0, 1, mesh.vertex_buffer.GetAddressOf(), &stride, &offset);
-		Render.get_immediate_context()->IASetIndexBuffer(mesh.index_buffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		Render.get_immediate_context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		Render.get_immediate_context()->IASetInputLayout(input_layout.Get());
-
-		Render.get_immediate_context()->VSSetShader(vertex_shader.Get(), nullptr, 0);
-		Render.get_immediate_context()->PSSetShader(pixel_shader.Get(), nullptr, 0);
-
-		XMStoreFloat4x4(&constant_data.world, XMLoadFloat4x4(&mesh.default_global_transform) * world);
-
-		for (const mesh::subset& subset : mesh.subsets)
-		{
-			const material& material{ materials.at(subset.material_unique_id) };
-
-			XMFLOAT4 color = material_color;
-			XMStoreFloat4(&constant_data.material_color, XMLoadFloat4(&color) * XMLoadFloat4(&material.Kd));
-
-			Render.get_immediate_context()->UpdateSubresource(constant_buffer.Get(), 0, 0, &constant_data, 0, 0);
-			Render.get_immediate_context()->VSSetConstantBuffers(0, 1, constant_buffer.GetAddressOf());
-
-			Render.get_immediate_context()->PSSetShaderResources(0, 1, material.shader_resource_views[0].GetAddressOf());
-			Render.get_immediate_context()->DrawIndexed(subset.index_count, subset.start_index_location, 0);
-		}
-	}
-
-	Render.set_rasterizer_state(render::RASTERIZER_NORMAL);
-}
-
 void skinned_mesh::draw(render Render, XMFLOAT4 material_color, int coordinate_system, const animation::keyframe* keyframe)
 {
 	XMMATRIX world, scl, rot, trans;
@@ -1303,8 +1219,8 @@ void skinned_mesh::create_com_objects(ID3D11Device* device, const char* fbx_file
 		hr = device->CreateBuffer(&buffer_desc, &subresource_data,mesh.index_buffer.ReleaseAndGetAddressOf());
 		_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 #if 1
-		mesh.vertices.clear();
-		mesh.indices.clear();
+		//mesh.vertices.clear();
+		//mesh.indices.clear();
 #endif
 	}
 

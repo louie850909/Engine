@@ -23,7 +23,7 @@ STAGE& STAGE::Instance()
 void STAGE::initialize()
 {
 	//mesh = std::make_unique<static_mesh>(Render->get_device(), L".\\resources\\landscape.obj", position, scale, rotation, false);
-	skinnedMesh = std::make_unique<skinned_mesh>(Render->get_device(), _bstr_t(L".\\resources\\testStage\\ExampleStage.fbx"), false, position, scale, rotation, 0.0f);
+	skinnedMesh = std::make_unique<skinned_mesh>(Render->get_device(), ".\\resources\\testStage\\ExampleStage.fbx", false, position, scale, rotation, 0.0f);
 }
 
 void STAGE::update(float elapsed_time)

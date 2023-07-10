@@ -62,6 +62,63 @@ bool Collision::RayVsStaticModel(const XMFLOAT3& start, const XMFLOAT3& end, con
 	return false;
 }
 
+bool Collision::RayVsSkinnedModel(const XMFLOAT3& start, const XMFLOAT3& end, const skinned_mesh* mesh, HitResult& result)
+{
+	XMMATRIX world, scale, rotation, translation, invWorld;
+	world = XMMatrixIdentity();
+	scale = XMMatrixScaling(mesh->scale.x, mesh->scale.y, mesh->scale.z);
+	world = XMMatrixMultiply(world, scale);
+	rotation = XMMatrixRotationRollPitchYaw(mesh->rotation.x, mesh->rotation.y + XM_PI, mesh->rotation.z);
+	world = XMMatrixMultiply(world, rotation);
+	translation = XMMatrixTranslation(mesh->position.x, mesh->position.y, mesh->position.z);
+	world = XMMatrixMultiply(world, translation);
+
+	//float lengthsqr = powf(start.x - end.x, 2) + powf(start.y - end.y, 2) + powf(start.z - end.z, 2);
+
+	for (const skinned_mesh::mesh m : mesh->meshes)
+	{
+		for (const skinned_mesh::mesh::subset s : m.subsets)
+		{
+			for (uint32_t i = 0; i < s.index_count; i += 3)
+			{
+				// 頂点インデックスを取得
+				uint32_t index0 = m.indices.at(s.start_index_location + i + 0);
+				uint32_t index1 = m.indices.at(s.start_index_location + i + 1);
+				uint32_t index2 = m.indices.at(s.start_index_location + i + 2);
+
+				// 頂点座標を取得
+				XMFLOAT3 p0 = m.vertices.at(index0).position;
+				XMFLOAT3 p1 = m.vertices.at(index1).position;
+				XMFLOAT3 p2 = m.vertices.at(index2).position;
+
+				// ワールド座標に変換
+				XMFLOAT3 p0w, p1w, p2w;
+				XMStoreFloat3(&p0w, XMVector3Transform(XMLoadFloat3(&p0), XMLoadFloat4x4(&m.default_global_transform) * world));
+				XMStoreFloat3(&p1w, XMVector3Transform(XMLoadFloat3(&p1), XMLoadFloat4x4(&m.default_global_transform) * world));
+				XMStoreFloat3(&p2w, XMVector3Transform(XMLoadFloat3(&p2), XMLoadFloat4x4(&m.default_global_transform) * world));
+
+				/*float lengthToV0 = powf(p0w.x - start.x, 2) + powf(p0w.y - start.y, 2) + powf(p0w.z - start.z, 2);
+				float lengthToV1 = powf(p1w.x - start.x, 2) + powf(p1w.y - start.y, 2) + powf(p1w.z - start.z, 2);
+				float lengthToV2 = powf(p2w.x - start.x, 2) + powf(p2w.y - start.y, 2) + powf(p2w.z - start.z, 2);
+
+				if (lengthToV0 > lengthsqr || lengthToV1 > lengthsqr || lengthToV2 > lengthsqr)
+				{
+					continue;
+				}*/
+
+				// レイと三角形の当たり判定
+				if (RayCast(p0w, p1w, p2w, start, end, &result.Pos, &result.Normal))
+				{
+					result.Distance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&start) - XMLoadFloat3(&result.Pos)));
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start, XMFLOAT3 end, XMFLOAT3* hit, XMFLOAT3* normal)
 {
 	XMVECTOR	p0 = XMLoadFloat3(&xp0);
