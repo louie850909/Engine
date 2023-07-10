@@ -23,6 +23,7 @@ PLAYER::PLAYER(render* Render) : Character(Render)
 PLAYER::~PLAYER()
 {
 	mesh.release();
+	delete effect;
 }
 
 void PLAYER::initialize()
@@ -38,6 +39,8 @@ void PLAYER::initialize()
 	mesh->append_animations(".\\resources\\UnitychanSD\\Animation\\Death.fbx", 0.0f, skinned_mesh::BINARY);
 	mesh->append_animations(".\\resources\\UnitychanSD\\Animation\\Fall Down.fbx", 0.0f, skinned_mesh::BINARY);
 	keyframe = mesh->animation_clips.at(clip_index).sequence.at(frame_index);
+
+	effect = new Effect(".\\resources\\Effect\\test3.efk", this->Render);
 }
 
 void PLAYER::update(float elapsed_time)
@@ -136,7 +139,10 @@ bool PLAYER::InputJump(float elapsed_time)
 	// ƒL[“ü—Í‚ðŽæ“¾‚·‚é
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	if (gamePad.GetButtonDown() == gamePad.BTN_LEFT_SHOULDER)
+	{
+		effect->Play(position);
 		return true;
+	}
 	return false;
 }
 

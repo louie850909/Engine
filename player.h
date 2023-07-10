@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "DebugRenderer.h"
 #include "collision.h"
+#include "Effect.h"
 
 class PLAYER : public Character
 {
@@ -37,4 +38,6 @@ private:
 
 	void toJump();
 	void updateJump(float elapsed_time);
+
+	Effect* effect = nullptr;
 };

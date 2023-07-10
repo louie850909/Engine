@@ -1,6 +1,7 @@
 #include "sceneGame.h"
 #include "sceneManager.h"
 #include "sceneTitle.h"
+#include "EffectManager.h"
 
 SceneGame::SceneGame(render* Render)
 {
@@ -29,6 +30,7 @@ void SceneGame::Update(float elapsed_time)
 {
 	light->update();
 	player->update(elapsed_time);
+	EffectManager::Instance().Update(elapsed_time);
 
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	if (gamePad.GetButtonDown() == gamePad.BTN_START)
@@ -51,11 +53,14 @@ void SceneGame::Draw(float elapsed_time)
 	player->draw(elapsed_time);
 	stage->draw(elapsed_time);
 
-#ifdef _DEBUG
-	player->drawDebugPrimitive();
+	/*エフェクト描画*/
 	XMFLOAT4X4 v, p;
 	XMStoreFloat4x4(&v, Render->get_view_matrix());
 	XMStoreFloat4x4(&p, Render->get_projection_matrix());
+	EffectManager::Instance().Draw(v,p);
+
+#ifdef _DEBUG
+	player->drawDebugPrimitive();
 	Render->get_debug_renderer()->Render(Render->get_immediate_context(), v, p);
 #endif // DEBUG
 

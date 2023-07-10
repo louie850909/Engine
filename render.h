@@ -126,5 +126,5 @@ private:
 
 	DebugRenderer* debug_renderer;
 
-	std::mutex* mutex;
+	std::mutex* mutex = new std::mutex();
 };

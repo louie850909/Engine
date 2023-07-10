@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "EffectManager.h"
 #include "sceneManager.h"
 #include "sceneTitle.h"
 
@@ -18,6 +19,8 @@ bool framework::initialize()
 
 	Render.initialize();
 	Render.set();
+	
+	EffectManager::Instance().Init(&Render);
 	
 	SceneManager::Instance().ChangeScene(new SceneTitle(&Render));
 
@@ -46,6 +49,7 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 
 bool framework::uninitialize()
 {
+	EffectManager::Instance().Uninit();
 	return true;
 }
 
