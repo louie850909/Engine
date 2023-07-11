@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "EffectManager.h"
 #include "sceneManager.h"
-#include "sceneTitle.h"
+#include "sceneLogo.h"
 
 framework::framework(HWND hwnd, HINSTANCE hinstance) : 
 	hwnd(hwnd) , 
@@ -22,7 +22,7 @@ bool framework::initialize()
 	
 	EffectManager::Instance().Init(&Render);
 	
-	SceneManager::Instance().ChangeScene(new SceneTitle(&Render));
+	SceneManager::Instance().ChangeScene(new SceneLogo(&Render));
 
 	return true;
 }

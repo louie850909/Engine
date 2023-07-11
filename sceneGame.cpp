@@ -1,6 +1,6 @@
 #include "sceneGame.h"
 #include "sceneManager.h"
-#include "sceneTitle.h"
+#include "sceneLogo.h"
 #include "EffectManager.h"
 
 SceneGame::SceneGame(render* Render)
@@ -35,7 +35,7 @@ void SceneGame::Update(float elapsed_time)
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	if (gamePad.GetButtonDown() == gamePad.BTN_START)
 	{
-		SceneManager::Instance().ChangeScene(new SceneTitle(Render));
+		SceneManager::Instance().ChangeScene(new SceneLogo(Render));
 	}
 }
 

@@ -51,6 +51,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneGame.h" />
     <ClInclude Include="sceneLoading.h" />
+    <ClInclude Include="sceneLogo.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneTitle.h" />
     <ClInclude Include="shader.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="render.cpp" />
     <ClCompile Include="sceneGame.cpp" />
     <ClCompile Include="sceneLoading.cpp" />
+    <ClCompile Include="sceneLogo.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
