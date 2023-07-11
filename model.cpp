@@ -76,7 +76,7 @@ HRESULT make_dummy_texture(ID3D11Device* device, ID3D11ShaderResourceView** shad
 	return hr;
 }
 
-static_mesh::static_mesh(ID3D11Device* device, const wchar_t* obj_filename, XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot, bool texture_invert)
+static_mesh::static_mesh(ID3D11Device* device, const char* obj_filename, XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot, bool texture_invert)
 {
 	HRESULT hr = { S_OK };
 

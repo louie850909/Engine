@@ -44,6 +44,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="modelManager.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="render.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="modelManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="render.cpp" />

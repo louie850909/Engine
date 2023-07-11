@@ -27,7 +27,7 @@ protected:
 	float collision_radius;
 	float collision_height;
 
-	std::unique_ptr<skinned_mesh> mesh;
+	std::shared_ptr<skinned_mesh> mesh;
 
 	virtual void initialize();
 	virtual void update(float elapsed_time);

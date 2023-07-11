@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "camera.h"
 #include "stage.h"
+#include "modelManager.h"
 
 PLAYER::PLAYER(render* Render) : Character(Render)
 {
@@ -22,13 +23,14 @@ PLAYER::PLAYER(render* Render) : Character(Render)
 
 PLAYER::~PLAYER()
 {
-	mesh.release();
 	delete effect;
 }
 
 void PLAYER::initialize()
 {
-	mesh = std::make_unique<skinned_mesh>(Render->get_device(), _bstr_t(L".\\resources\\UnitychanSD\\Unity_Chan_generic.fbx"), true, position, scale, rotation, 0.0f);
+	//mesh = std::make_unique<skinned_mesh>(Render->get_device(), _bstr_t(L".\\resources\\UnitychanSD\\Unity_Chan_generic.fbx"), true, position, scale, rotation, 0.0f);
+	mesh = ModelManager::getInstance().LoadSkinnedMesh(".\\resources\\UnitychanSD\\Unity_Chan_generic.fbx", Render, true);
+
 	mesh->append_animations(".\\resources\\UnitychanSD\\Animation\\idle.fbx", 0.0f, skinned_mesh::BINARY);
 	mesh->append_animations(".\\resources\\UnitychanSD\\Animation\\run.fbx", 0.0f, skinned_mesh::BINARY);
 	mesh->append_animations(".\\resources\\UnitychanSD\\Animation\\jump.fbx", 0.0f, skinned_mesh::BINARY);

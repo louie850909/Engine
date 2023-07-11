@@ -13,7 +13,7 @@ public:
 	~Font();
 
 	void Begin(ID3D11DeviceContext* context);
-	void Draw(float x, float y, const wchar_t* string, float scale);
+	void Draw(float x, float y, const wchar_t* string, float scale, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1,1,1,1));
 	void End(ID3D11DeviceContext* context);
 
 private:

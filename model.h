@@ -168,7 +168,12 @@ public:
 	};
 	bounding_box b_box;
 
-	static_mesh(ID3D11Device* device, const wchar_t* obj_filename, XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot, bool texture_invert);
+	static_mesh(ID3D11Device* device, const char* obj_filename, 
+				XMFLOAT3 pos = XMFLOAT3(0,0,0), 
+				XMFLOAT3 scl = XMFLOAT3(1,1,1), 
+				XMFLOAT3 rot = XMFLOAT3(0,0,0), 
+				bool texture_invert = false);
+
 	~static_mesh();
 
 	void draw(render Render);
@@ -308,7 +313,13 @@ public:
 	}
 
 
-	skinned_mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate , XMFLOAT3 pos, XMFLOAT3 scl, XMFLOAT3 rot, float sampling_rate);
+	skinned_mesh(	ID3D11Device* device, const char* fbx_filename, 
+					bool triangulate = false , 
+					XMFLOAT3 pos = XMFLOAT3(0,0,0), 
+					XMFLOAT3 scl = XMFLOAT3(1,1,1), 
+					XMFLOAT3 rot = XMFLOAT3(0,0,0), 
+					float sampling_rate = 0.0f);
+
 	virtual ~skinned_mesh();
 
 	void fetch_meshes(FbxScene* fbx_scene, std::vector<mesh>& meshes);

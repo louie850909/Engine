@@ -32,7 +32,7 @@ void SceneTitle::Draw(float elapsed_time)
 
 	Sprite->renderTopLeft(*Render, 1, 1, 1, 1, 0);
 	Fonts->Begin(Render->get_immediate_context());
-	Fonts->Draw(400, 250, L"TITLE", 3);
+	Fonts->Draw(400, 250, L"TITLE", 3, XMFLOAT4(1,0,0,1));
 	Fonts->Draw(320, 500, L"PRESS ENTER to START", 1);
 	Fonts->End(Render->get_immediate_context());
 }
