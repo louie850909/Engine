@@ -19,6 +19,8 @@ bool framework::initialize()
 
 	Render.initialize();
 	Render.set();
+
+	Sound::getInstance().InitSound(hwnd);
 	
 	EffectManager::Instance().Init(&Render);
 	
@@ -50,6 +52,7 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 bool framework::uninitialize()
 {
 	EffectManager::Instance().Uninit();
+	Sound::getInstance().UninitSound();
 	return true;
 }
 

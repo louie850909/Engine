@@ -55,6 +55,7 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneTitle.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="sprite_batch.h" />
     <ClInclude Include="stage.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="sprite_batch.cpp" />
     <ClCompile Include="stage.cpp" />
