@@ -43,6 +43,7 @@ void PLAYER::initialize()
 	keyframe = mesh->animation_clips.at(clip_index).sequence.at(frame_index);
 
 	effect = new Effect(".\\resources\\Effect\\test3.efk", this->Render);
+	WalkSE = Audio::Instance().LoadAudioSource(".\\resources\\SE\\walk.wav");
 }
 
 void PLAYER::update(float elapsed_time)
@@ -131,6 +132,7 @@ bool PLAYER::InputMove(float elapsed_time)
 		rotation.y = CAMERA::Instance().get_rotation().y + angle;
 		position.x += sinf(rotation.y) * moveSpeed;
 		position.z += cosf(rotation.y) * moveSpeed;
+		WalkSE->Play(false);
 		return true;
 	}
 	return false;
@@ -154,6 +156,7 @@ void PLAYER::toIdle()
 	blendframes[0] = &keyframe;
 	blendframes[1] = &mesh->animation_clips.at((int)State::Idle).sequence.at(0);
 	playAnimation((int)State::Idle, true, 0.05f);
+	WalkSE->Stop();
 }
 
 void PLAYER::updateIdle(float elapsed_time)

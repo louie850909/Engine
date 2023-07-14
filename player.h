@@ -6,6 +6,8 @@
 #include "DebugRenderer.h"
 #include "collision.h"
 #include "Effect.h"
+#include "AudioSource.h"
+#include "Audio.h"
 
 class PLAYER : public Character
 {
@@ -40,4 +42,5 @@ private:
 	void updateJump(float elapsed_time);
 
 	Effect* effect = nullptr;
+	std::unique_ptr<AudioSource> WalkSE;
 };

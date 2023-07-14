@@ -3,6 +3,8 @@
 #include "sprite.h"
 #include "Font.h"
 #include "render.h"
+#include "AudioSource.h"
+#include "Audio.h"
 
 class SceneTitle : public Scene
 {
@@ -19,4 +21,6 @@ private:
 	std::unique_ptr<sprite> Sprite;
 	std::unique_ptr<Font> Fonts;
 	render* Render;
+
+	std::unique_ptr<AudioSource> BGM;
 };

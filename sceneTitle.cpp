@@ -13,6 +13,8 @@ void SceneTitle::Init()
 {
 	Sprite = std::make_unique<sprite>(*Render, L".\\resources\\black-metal-texture.jpg", XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
 	Fonts = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\bold\\bold.fnt", 1024);
+	BGM = Audio::Instance().LoadAudioSource(".\\resources\\BGM\\BGM_Title.wav");
+	BGM->Play(true);
 	isInit = true;
 }
 
@@ -39,6 +41,7 @@ void SceneTitle::Draw(float elapsed_time)
 
 void SceneTitle::Uninit()
 {
+	BGM->Stop();
 	Sprite.release();
 	Fonts.release();
 	if (Render != nullptr)

@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioResource.h" />
+    <ClInclude Include="AudioSource.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="collision.h" />
@@ -55,13 +58,15 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneTitle.h" />
     <ClInclude Include="shader.h" />
-    <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="sprite_batch.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioResource.cpp" />
+    <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -94,7 +99,6 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
-    <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="sprite_batch.cpp" />
     <ClCompile Include="stage.cpp" />
