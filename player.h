@@ -31,6 +31,7 @@ private:
 	};
 
 	State state = State::Idle;
+	int placeIndex = -1;
 
 	void toIdle();
 	void updateIdle(float elapsed_time);

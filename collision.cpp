@@ -119,6 +119,20 @@ bool Collision::RayVsSkinnedModel(const XMFLOAT3& start, const XMFLOAT3& end, co
 	return false;
 }
 
+bool Collision::VsStage(const XMFLOAT3& start, const XMFLOAT3& end, const std::vector<triangle>& triangles, HitResult& result)
+{
+	for (const triangle& t : triangles)
+	{
+		if (RayCast(t.v0, t.v1, t.v2, start, end, &result.Pos, &result.Normal))
+		{
+			result.Distance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&start) - XMLoadFloat3(&result.Pos)));
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool Collision::RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start, XMFLOAT3 end, XMFLOAT3* hit, XMFLOAT3* normal)
 {
 	XMVECTOR	p0 = XMLoadFloat3(&xp0);

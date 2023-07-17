@@ -1,6 +1,13 @@
 #pragma once
 #include "model.h"
 
+struct triangle
+{
+	XMFLOAT3 v0;
+	XMFLOAT3 v1;
+	XMFLOAT3 v2;
+};
+
 class STAGE
 {
 public :
@@ -9,6 +16,7 @@ public :
 	XMFLOAT3 position;
 	XMFLOAT3 rotation;
 	XMFLOAT3 scale;
+	XMFLOAT3 center;
 
 	std::unique_ptr<static_mesh> mesh;
 	std::unique_ptr<skinned_mesh> skinnedMesh;
@@ -23,5 +31,6 @@ public :
 	void draw(float elapsed_time);
 	void uninitialize();
 
+	std::vector<triangle> subDivisions[8];
 private:
 };

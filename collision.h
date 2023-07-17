@@ -3,6 +3,7 @@
 #include <DirectXMath.h>
 #include "model.h"
 #include "game_object.h"
+#include "stage.h"
 
 using namespace DirectX;
 
@@ -52,6 +53,13 @@ public:
 									const XMFLOAT3& end,
 									const skinned_mesh* mesh,
 									HitResult& result);
+
+	// レイとステージの当たり判定
+	static bool VsStage(const XMFLOAT3& start,
+						const XMFLOAT3& end,
+						const std::vector<triangle>& triangles,
+						HitResult& result);
+
 
 	// レイと三角形の当たり判定
 	static bool RayCast(XMFLOAT3 xp0, XMFLOAT3 xp1, XMFLOAT3 xp2, XMFLOAT3 start, XMFLOAT3 end, XMFLOAT3* hit, XMFLOAT3* normal);
