@@ -1,15 +1,11 @@
 #include "misc.h"
 #include "Audio.h"
 
-Audio* Audio::instance = nullptr;
+//Audio* Audio::instance = nullptr;
 
 // コンストラクタ
 Audio::Audio()
 {
-	// インスタンス設定
-	_ASSERT_EXPR(instance == nullptr, "already instantiated");
-	instance = this;
-
 	HRESULT hr;
 
 	// COMの初期化

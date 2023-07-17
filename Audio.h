@@ -24,8 +24,6 @@ private:
 	Audio();
 	~Audio();
 
-	static Audio*			instance;
-
 	IXAudio2*				xaudio = nullptr;
 	IXAudio2MasteringVoice* masteringVoice = nullptr;
 };
