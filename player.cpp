@@ -114,7 +114,7 @@ void PLAYER::update(float elapsed_time)
 
 	// •Ç”»’è
 	if (Collision::VsStage(XMFLOAT3(position.x, position.y + 10.0f, position.z),
-		XMFLOAT3(position.x + sinf(rotation.y) * 3, position.y + 10.0f, position.z + cosf(rotation.y) * 3),
+		XMFLOAT3(position.x + sinf(rotation.y) * 3, position.y + 5.0f, position.z + cosf(rotation.y) * 3),
 		STAGE::Instance().subDivisions[placeIndex], hitResult))
 	{
 		position = prePos;
@@ -170,7 +170,6 @@ bool PLAYER::InputMove(float elapsed_time)
 		rotation.y = CAMERA::Instance().get_rotation().y + angle;
 		position.x += sinf(rotation.y) * moveSpeed;
 		position.z += cosf(rotation.y) * moveSpeed;
-		WalkSE->Play(false);
 		return true;
 	}
 	return false;
@@ -215,6 +214,7 @@ void PLAYER::toRun()
 
 void PLAYER::updateRun(float elapsed_time)
 {
+	WalkSE->Play(false);
 	if (!InputMove(elapsed_time) && blendSecond == 0)
 		toIdle();
 	if (InputJump(elapsed_time) && blendSecond == 0)
@@ -227,6 +227,7 @@ void PLAYER::toJump()
 	blendframes[0] = &keyframe;
 	blendframes[1] = &mesh->animation_clips.at((int)State::Jump).sequence.at(0);
 	playAnimation((int)State::Jump, false, 0.05f);
+	WalkSE->Stop();
 }
 
 void PLAYER::updateJump(float elapsed_time)
