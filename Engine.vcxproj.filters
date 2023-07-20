@@ -156,6 +156,9 @@
     <ClInclude Include="Effect.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui_ja_gryph_ranges.cpp">
@@ -275,6 +278,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="bbox.hlsli">
@@ -296,6 +302,15 @@
       <Filter>HLSL</Filter>
     </None>
     <None Include="Debug.hlsli">
+      <Filter>HLSL</Filter>
+    </None>
+    <None Include="Billboard.hlsli">
+      <Filter>HLSL</Filter>
+    </None>
+    <None Include="instancingBillboard.hlsli">
+      <Filter>HLSL</Filter>
+    </None>
+    <None Include="MatrixOperation.hlsli">
       <Filter>HLSL</Filter>
     </None>
   </ItemGroup>
@@ -340,6 +355,18 @@
       <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="DebugPS.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Billboard_ps.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Billboard_vs.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="instancingBillboard_vs.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="instancingBillboard_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>

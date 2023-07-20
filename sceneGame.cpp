@@ -11,6 +11,11 @@ SceneGame::SceneGame(render* Render)
 void SceneGame::Init()
 {
 	sprites[0] = std::make_unique<sprite>(*Render, L".\\resources\\screenshot.jpg");
+	billboards[0] = std::make_unique<Billboard>(*Render, L".\\resources\\screenshot.jpg", XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1), 1.0f, 1.0f, true, 1000);
+	for (int i = 0; i < billboards[0]->instances.size(); i++)
+	{
+		billboards[0]->instances[i].pos.x = i * 1;
+	}
 
 	light = std::make_unique<LIGHT>();
 	light->initialize();
@@ -52,6 +57,7 @@ void SceneGame::Draw(float elapsed_time)
 
 	player->draw(elapsed_time);
 	stage->draw(elapsed_time);
+	billboards[0]->draw(*Render);
 
 	/*エフェクト描画*/
 	XMFLOAT4X4 v, p;

@@ -5,6 +5,7 @@
 #include "player.h"
 #include "stage.h"
 #include "sprite.h"
+#include "billboard.h"
 
 class SceneGame : public Scene
 {
@@ -22,6 +23,7 @@ private:
 
 	std::unique_ptr<LIGHT> light;
 	std::unique_ptr<sprite> sprites[8];
+	std::unique_ptr<Billboard> billboards[8];
 	std::unique_ptr<Font> fonts[8];
 	std::unique_ptr<PLAYER> player;
 	std::unique_ptr<STAGE> stage;

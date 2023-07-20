@@ -300,7 +300,8 @@ void render::set_view_projection_matrix(CAMERA* camera, LIGHT* light)
 	viewMatrix = V;
 
 	scene_constants data{};
-	XMStoreFloat4x4(&data.view_projection, V * P);
+	XMStoreFloat4x4(&data.view, V);
+	XMStoreFloat4x4(&data.projection, P);
 	data.light_direction = XMFLOAT4(light->get_direction().x, light->get_direction().y, light->get_direction().z, 0.0f);
 	data.camera_position = XMFLOAT4(camera->get_position().x, camera->get_position().y, camera->get_position().z, 0.0f);
 	immediate_context->UpdateSubresource(constant_buffers[0].Get(), 0, 0, &data, 0, 0);
@@ -321,7 +322,8 @@ void render::set_2D_view_projection_matrix()
 	XMMATRIX V{ XMMatrixIdentity() };
 
 	scene_constants data{};
-	XMStoreFloat4x4(&data.view_projection, V * P);
+	XMStoreFloat4x4(&data.view, V);
+	XMStoreFloat4x4(&data.projection, P);
 	data.light_direction = { 0, 0, 0, 0 };
 	immediate_context->UpdateSubresource(constant_buffers[0].Get(), 0, 0, &data, 0, 0);
 	immediate_context->VSSetConstantBuffers(1, 1, constant_buffers[0].GetAddressOf());

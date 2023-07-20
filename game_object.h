@@ -101,6 +101,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11InputLayout>	input_layout;
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		vertex_buffer;
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		index_buffer;
+	Microsoft::WRL::ComPtr<ID3D11Buffer>		instance_buffer;
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shader_resource_view;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constant_buffer;

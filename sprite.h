@@ -13,7 +13,6 @@ public:
 	float width;
 	float height;
 
-	D3D11_TEXTURE2D_DESC texture2d_desc;
 
 	sprite(render r, const wchar_t* filename);
 	~sprite();
@@ -30,4 +29,5 @@ public:
 		float tx, float ty, float tw, float th);
 
 private:
+	D3D11_TEXTURE2D_DESC texture2d_desc;
 };

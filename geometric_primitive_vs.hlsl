@@ -3,7 +3,7 @@
 VS_OUT main(float4 position : POSITION, float4 normal : NORMAL, float4 color : COLOR)
 {
     VS_OUT vout;
-    vout.Pos = mul(position, mul(world, view_projection));
+    vout.Pos = mul(position, mul(world, mul(view, projection)));
     
     normal.w = 0;
     float4 N = normalize(mul(normal, world));

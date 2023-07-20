@@ -30,9 +30,10 @@ class render
 public:
 	struct scene_constants
 	{
-		DirectX::XMFLOAT4X4 view_projection;      //ビュー・プロジェクション変換行列
-		DirectX::XMFLOAT4 light_direction;        //ライトの向き
-		DirectX::XMFLOAT4 camera_position;		  //カメラの位置
+		DirectX::XMFLOAT4X4 view;				//ビュー変換行列
+		DirectX::XMFLOAT4X4 projection;			//射影変換行列
+		DirectX::XMFLOAT4 light_direction;      //ライトの向き
+		DirectX::XMFLOAT4 camera_position;		//カメラの位置
 	};
 
 	enum DepthMode

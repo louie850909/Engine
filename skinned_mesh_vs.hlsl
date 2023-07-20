@@ -20,7 +20,7 @@ VS_OUT main(VS_IN vin)
     vin.tangent = float4(blended_tangent.xyz, 0.0f);
 
     VS_OUT vout;
-    vout.position = mul(vin.position, mul(world, view_projection));
+    vout.position = mul(vin.position, mul(world, mul(view, projection)));
     vout.world_position = mul(vin.position, world);
     vin.normal.w = 0;
     vout.world_normal = normalize(mul(vin.normal, world));
