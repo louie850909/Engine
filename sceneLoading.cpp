@@ -11,7 +11,7 @@ SceneLoading::SceneLoading(render* Render, Scene* nextScene)
 
 void SceneLoading::Init()
 {
-	Sprite = std::make_unique<sprite>(*Render, L".\\resources\\LoadingIcon.png", XMFLOAT2(890, 630), 80.0f, 80.0f);
+	Sprite = std::make_unique<sprite>(*Render, L".\\resources\\LoadingIcon.png");
 	font = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\bold\\bold.fnt", 1024);
 	angle = 0.0f;
 	ready = false;
@@ -38,7 +38,7 @@ void SceneLoading::Draw(float elapsed_time)
 	float clear_color[]{ 0.0f, 0.0f, 1.0f, 1.0f };
 	Render->clear(clear_color);
 
-	Sprite->renderTopLeft(*Render, 1, 0, 1, 1, angle);
+	Sprite->renderTopLeft(*Render, XMFLOAT2(890, 630), 80.0f, 80.0f, 1, 0, 1, 1, angle);
 	font->Begin(Render->get_immediate_context());
 	font->Draw(970, 640, L"LOADING...", 1);
 	font->End(Render->get_immediate_context());

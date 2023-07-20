@@ -17,12 +17,8 @@ inline void rotate(float& x, float& y, float center_x, float center_y, float cos
 	y += center_y;
 }
 
-sprite::sprite(render r, const wchar_t* filename, XMFLOAT2 pos, float width, float height)
+sprite::sprite(render r, const wchar_t* filename)
 {
-	this->position = XMFLOAT3(pos.x, pos.y, 0.0f);
-	this->width = width;
-	this->height = height;
-
 	// 頂点情報のセット
 	vertex vertices[]
 	{
@@ -95,14 +91,19 @@ sprite::~sprite()
 	shader_resource_view.Get()->Release();
 }
 
-void sprite::renderTopLeft(render Render, float r, float g, float b, float a, float degree)
+void sprite::renderTopLeft(render Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree)
 {
-	renderTopLeft(Render, r, g, b, a, degree, 0, 0, 1, 1);
+	renderTopLeft(Render, pos, width, height, r, g, b, a, degree, 0, 0, 1, 1);
 }
 
-void sprite::renderTopLeft(render Render, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
+void sprite::renderTopLeft(render Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
 {
+	this->width = width;
+	this->height = height;
+
 	Render.set_depth_stencil_state(render::DEPTH_TEST_OFF_DEPTH_WRITE_OFF);
+
+	position = XMFLOAT3(pos.x, pos.y, 0.0f);
 
 	// renderメンバ関数の引数（dx, dy, dw, dh）から矩形の各頂点の位置（スクリーン座標系）を計算する
 	float x0{ position.x }; // 左上の頂点のx座標

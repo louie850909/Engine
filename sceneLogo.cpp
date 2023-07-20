@@ -10,8 +10,8 @@ SceneLogo::SceneLogo(render* Render)
 
 void SceneLogo::Init()
 {
-	Logo = std::make_unique<sprite>(*Render, L".\\resources\\crescendo mark.png", XMFLOAT2(512, 232), 256.0f, 256.0f);
-	Black = std::make_unique<sprite>(*Render, L".\\resources\\black.png", XMFLOAT2(0,0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
+	Logo = std::make_unique<sprite>(*Render, L".\\resources\\crescendo mark.png");
+	Black = std::make_unique<sprite>(*Render, L".\\resources\\black.png");
 	Fonts = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\stand\\stand.fnt", 1024);
 	Time = 0.0f;
 	isInit = true;
@@ -40,21 +40,21 @@ void SceneLogo::Draw(float elapsed_time)
 	// 最初の2.5秒はフェードイン
 	if (Time <= 2.5f)
 	{
-		Logo->renderTopLeft(*Render, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+		Logo->renderTopLeft(*Render, XMFLOAT2(512, 232), 256.0f, 256.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
 		Fonts->Begin(Render->get_immediate_context());
 		Fonts->Draw(450, 520, L"Powered by Cresc. Engine", 1);
 		Fonts->End(Render->get_immediate_context());
-		Black->renderTopLeft(*Render, 0.0f, 0.0f, 0.0f, 1.0f - Time / 2.5f, 0.0f);
+		Black->renderTopLeft(*Render, XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f, 0.0f, 0.0f, 1.0f - Time / 2.5f, 0.0f);
 	}
 
 	// 2.5秒から5秒までフェードアウト
 	else if (Time <= 5.0f)
 	{
-		Logo->renderTopLeft(*Render, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+		Logo->renderTopLeft(*Render, XMFLOAT2(512, 232), 256.0f, 256.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
 		Fonts->Begin(Render->get_immediate_context());
 		Fonts->Draw(450, 520, L"Powered by Cresc. Engine", 1);
 		Fonts->End(Render->get_immediate_context());
-		Black->renderTopLeft(*Render, 0.0f, 0.0f, 0.0f, (Time - 2.5f) / 2.5f, 0.0f);
+		Black->renderTopLeft(*Render, XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f, 0.0f, 0.0f, (Time - 2.5f) / 2.5f, 0.0f);
 	}
 }
 

@@ -10,7 +10,7 @@ SceneGame::SceneGame(render* Render)
 
 void SceneGame::Init()
 {
-	sprites[0] = std::make_unique<sprite>(*Render, L".\\resources\\screenshot.jpg", XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
+	sprites[0] = std::make_unique<sprite>(*Render, L".\\resources\\screenshot.jpg");
 
 	light = std::make_unique<LIGHT>();
 	light->initialize();
@@ -44,7 +44,7 @@ void SceneGame::Draw(float elapsed_time)
 	float clear_color[]{ 0.3f, 0.3f, 0.3f, 1.0f };
 	Render->clear(clear_color);
 	/*”wŒi•`‰æ*/
-	sprites[0].get()->renderTopLeft(*Render, 1, 1, 1, 1, 0);
+	sprites[0].get()->renderTopLeft(*Render, XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 1, 1, 1, 1, 0);
 
 	/*3D•`‰æ*/
 	CAMERA::Instance().SetCameraAT(XMFLOAT3(player->position.x, player->position.y + 10.0f, player->position.z));

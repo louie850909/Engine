@@ -11,7 +11,7 @@ SceneTitle::SceneTitle(render* Render)
 
 void SceneTitle::Init()
 {
-	Sprite = std::make_unique<sprite>(*Render, L".\\resources\\black-metal-texture.jpg", XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
+	Sprite = std::make_unique<sprite>(*Render, L".\\resources\\black-metal-texture.jpg");
 	Fonts = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\bold\\bold.fnt", 1024);
 	BGM = Audio::Instance().LoadAudioSource(".\\resources\\BGM\\BGM_Title.wav");
 	BGM->Play(true);
@@ -32,7 +32,7 @@ void SceneTitle::Draw(float elapsed_time)
 	float clear_color[]{ 0.3f, 0.3f, 0.3f, 1.0f };
 	Render->clear(clear_color);
 
-	Sprite->renderTopLeft(*Render, 1, 1, 1, 1, 0);
+	Sprite->renderTopLeft(*Render, XMFLOAT2(0, 0), (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 1, 1, 1, 1, 0);
 	Fonts->Begin(Render->get_immediate_context());
 	Fonts->Draw(400, 250, L"TITLE", 3, XMFLOAT4(1,0,0,1));
 	Fonts->Draw(320, 500, L"PRESS ENTER to START", 1);
