@@ -127,11 +127,21 @@ Billboard::Billboard(render r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 s
 
 void Billboard::draw(render r)
 {
+	// シェーダー リソースのバインド
+	r.get_immediate_context()->PSSetShaderResources(0, 1, shader_resource_view.GetAddressOf());
+
+	// プリミティブタイプおよびデータの順序に関する情報のバインド
+	r.get_immediate_context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// 入力レイアウトオブジェクトのバインド
+	r.get_immediate_context()->IASetInputLayout(input_layout.Get());
+
+	// シェーダーのバインド
+	r.get_immediate_context()->VSSetShader(vertex_shader.Get(), nullptr, 0);
+	r.get_immediate_context()->PSSetShader(pixel_shader.Get(), nullptr, 0);
+
 	if (this->instancing)
 	{
-		// シェーダー リソースのバインド
-		r.get_immediate_context()->PSSetShaderResources(0, 1, shader_resource_view.GetAddressOf());
-
 		// インスタンスバッファーの更新
 		D3D11_MAPPED_SUBRESOURCE mapped_subresource{};
 		HRESULT hr = r.get_immediate_context()->Map(instance_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped_subresource);
@@ -153,39 +163,16 @@ void Billboard::draw(render r)
 
 		r.get_immediate_context()->IASetVertexBuffers(0, 2, bufferPointer, strides, offsets);
 
-		// プリミティブタイプおよびデータの順序に関する情報のバインド
-		r.get_immediate_context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-		// 入力レイアウトオブジェクトのバインド
-		r.get_immediate_context()->IASetInputLayout(input_layout.Get());
-
-		// シェーダーのバインド
-		r.get_immediate_context()->VSSetShader(vertex_shader.Get(), nullptr, 0);
-		r.get_immediate_context()->PSSetShader(pixel_shader.Get(), nullptr, 0);
-
 		// 描画
 		r.get_immediate_context()->DrawInstanced(4, maxInstanceCount, 0, 0);
 	}
 	else
 	{
-		// シェーダー リソースのバインド
-		r.get_immediate_context()->PSSetShaderResources(0, 1, shader_resource_view.GetAddressOf());
-
 		// 頂点バッファーのバインド
 		UINT stride{ sizeof(vertex) };
 		UINT offset{ 0 };
 
 		r.get_immediate_context()->IASetVertexBuffers(0, 1, vertex_buffer.GetAddressOf(), &stride, &offset);
-
-		// プリミティブタイプおよびデータの順序に関する情報のバインド
-		r.get_immediate_context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-		// 入力レイアウトオブジェクトのバインド
-		r.get_immediate_context()->IASetInputLayout(input_layout.Get());
-
-		// シェーダーのバインド
-		r.get_immediate_context()->VSSetShader(vertex_shader.Get(), nullptr, 0);
-		r.get_immediate_context()->PSSetShader(pixel_shader.Get(), nullptr, 0);
 
 		// 定数バッファの更新
 		XMMATRIX w, scl, trs, view;
