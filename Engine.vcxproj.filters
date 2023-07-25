@@ -159,6 +159,12 @@
     <ClInclude Include="billboard.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="fountain.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui_ja_gryph_ranges.cpp">
@@ -281,6 +287,12 @@
     <ClCompile Include="billboard.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
+    <ClCompile Include="particle.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="fountain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="bbox.hlsli">
@@ -311,6 +323,9 @@
       <Filter>HLSL</Filter>
     </None>
     <None Include="MatrixOperation.hlsli">
+      <Filter>HLSL</Filter>
+    </None>
+    <None Include="particle.hlsli">
       <Filter>HLSL</Filter>
     </None>
   </ItemGroup>
@@ -367,6 +382,12 @@
       <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="instancingBillboard_ps.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="particle_vs.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="particle_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>

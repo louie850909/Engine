@@ -30,6 +30,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="fountain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="game_object.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="modelManager.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="scene.h" />
@@ -76,6 +78,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="fountain.cpp" />
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="game_object.cpp" />
@@ -93,6 +96,7 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modelManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="sceneGame.cpp" />
@@ -114,6 +118,7 @@
     <None Include="geometric_primitive.hlsli" />
     <None Include="instancingBillboard.hlsli" />
     <None Include="MatrixOperation.hlsli" />
+    <None Include="particle.hlsli" />
     <None Include="skinned_mesh.hlsli" />
     <None Include="sprite.hlsli" />
     <None Include="static_mesh.hlsli" />
@@ -178,6 +183,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="instancingBillboard_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="particle_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="particle_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
