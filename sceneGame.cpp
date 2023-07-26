@@ -18,6 +18,7 @@ void SceneGame::Init()
 	}
 
 	Fountains[0] = std::make_unique<Fountain>(*Render, 1.0f, 1.0f, 1000);
+	rains[0] = std::make_unique<Rain>(*Render, 0.05f, 1.0f, 4000);
 
 	light = std::make_unique<LIGHT>();
 	light->initialize();
@@ -35,9 +36,12 @@ void SceneGame::Init()
 
 void SceneGame::Update(float elapsed_time)
 {
+	std::thread threads[8];
+
 	light->update();
 	player->update(elapsed_time);
 	Fountains[0]->update(elapsed_time);
+	rains[0]->update(elapsed_time);
 	EffectManager::Instance().Update(elapsed_time);
 
 	GamePad& gamePad = Input::Instance().GetGamePad();
@@ -62,6 +66,7 @@ void SceneGame::Draw(float elapsed_time)
 	stage->draw(elapsed_time);
 	billboards[0]->draw(*Render);
 	Fountains[0]->draw(*Render);
+	rains[0]->draw(*Render);
 
 	/*エフェクト描画*/
 	XMFLOAT4X4 v, p;

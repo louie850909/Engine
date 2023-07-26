@@ -53,6 +53,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="rain.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneGame.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="rain.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="sceneGame.cpp" />
     <ClCompile Include="sceneLoading.cpp" />
