@@ -1,6 +1,6 @@
 #include "fountain.h"
 
-Fountain::Fountain(render r, float width, float height, int maxInstanceCount) : Particle(r, width, height, maxInstanceCount)
+Fountain::Fountain(render r, float width, float height, int maxInstanceCount) : Particle(r, width, height, maxInstanceCount, true, true)
 {
 	this->maxInstanceCount = maxInstanceCount;
 }
@@ -30,6 +30,8 @@ void Fountain::update(float elapsed_time)
 			{
 				instances[nCntParticle].use = false;
 				instances[nCntParticle].life = 0;
+				isFull = false;
+				startIndex = nCntParticle;
 			}
 			else
 			{
@@ -52,6 +54,7 @@ void Fountain::update(float elapsed_time)
 	// パーティクル発生
 	XMFLOAT3 pos;
 	XMFLOAT3 move;
+	XMFLOAT3 scl;
 	float fAngle, fLength;
 	int nLife;
 
@@ -61,9 +64,10 @@ void Fountain::update(float elapsed_time)
 	move.x = sinf(fAngle) * fLength * 10;
 	move.y = (rand() % 300 / 100.0f + height) * 10;
 	move.z = cosf(fAngle) * fLength * 10;
+	scl.x = scl.y = scl.z = (float)(rand() % 501) / 100.0f + 0.5f;
 
-	nLife = rand() % 10;
+	nLife = rand() % 10 + 2;
 	pos.y = height / 2;
 
-	addParticle(pos, move, XMFLOAT4(0.8f, 0.7f, 0.2f, 0.85f), nLife);
+	addParticle(pos, move, scl, XMFLOAT4(0.8f, 0.7f, 0.2f, 0.85f), nLife, startIndex);
 }

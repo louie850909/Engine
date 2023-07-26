@@ -114,411 +114,30 @@ if_z r0.y
 endif 
 
 #line 22
-nop 
+mov r1.x, cb1[0].x  // r1.x <- world._m00
+mov r1.y, cb1[1].x  // r1.y <- world._m01
+mov r1.z, cb1[2].x  // r1.z <- world._m02
+mov r1.w, l(0)  // r1.w <- world._m03
+mov r2.x, cb1[0].y  // r2.x <- world._m10
+mov r2.y, cb1[1].y  // r2.y <- world._m11
+mov r2.z, cb1[2].y  // r2.z <- world._m12
+mov r2.w, l(0)  // r2.w <- world._m13
+mov r3.x, cb1[0].z  // r3.x <- world._m20
+mov r3.y, cb1[1].z  // r3.y <- world._m21
+mov r3.z, cb1[2].z  // r3.z <- world._m22
+mov r3.w, l(0)  // r3.w <- world._m23
+mov r4.xyzw, l(0,0,0,1.000000)  // r4.x <- world._m30; r4.y <- world._m31; r4.z <- world._m32; r4.w <- world._m33
 
-#line 5 "D:\Repo\Engine\MatrixOperation.hlsli"
-mov r0.y, cb1[0].x  // r0.y <- n11
-mov r0.z, cb1[1].x  // r0.z <- n12
-mov r0.w, cb1[2].x  // r0.w <- n13
-mov r1.x, cb1[3].x  // r1.x <- n14
+#line 29
+mov r5.xyz, l(1.000000,0,0,0)  // r5.x <- trans._m00; r5.y <- trans._m10; r5.z <- trans._m20
+mov r5.w, v4.x  // r5.w <- trans._m30
+mov r6.xyz, l(0,1.000000,0,0)  // r6.x <- trans._m01; r6.y <- trans._m11; r6.z <- trans._m21
+mov r6.w, v4.y  // r6.w <- trans._m31
+mov r7.xyz, l(0,0,1.000000,0)  // r7.x <- trans._m02; r7.y <- trans._m12; r7.z <- trans._m22
+mov r7.w, v4.z  // r7.w <- trans._m32
+mov r8.xyzw, l(0,0,0,1.000000)  // r8.x <- trans._m03; r8.y <- trans._m13; r8.z <- trans._m23; r8.w <- trans._m33
 
-#line 6
-mov r1.y, cb1[0].y  // r1.y <- n21
-mov r1.z, cb1[1].y  // r1.z <- n22
-mov r1.w, cb1[2].y  // r1.w <- n23
-mov r2.x, cb1[3].y  // r2.x <- n24
-
-#line 7
-mov r2.y, cb1[0].z  // r2.y <- n31
-mov r2.z, cb1[1].z  // r2.z <- n32
-mov r2.w, cb1[2].z  // r2.w <- n33
-mov r3.x, cb1[3].z  // r3.x <- n34
-
-#line 8
-mov r3.y, cb1[0].w  // r3.y <- n41
-mov r3.z, cb1[1].w  // r3.z <- n42
-mov r3.w, cb1[2].w  // r3.w <- n43
-mov r4.x, cb1[3].w  // r4.x <- n44
-
-#line 10
-mul r4.y, r1.w, r3.x
-mul r4.y, r3.z, r4.y
-mul r4.z, r2.w, r2.x
-mul r4.z, r3.z, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r2.z, r2.x
-mul r4.z, r3.w, r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r1.z, r3.x
-mul r4.z, r3.w, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r1.w, r2.z
-mul r4.z, r4.x, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r1.z, r2.w
-mul r4.z, r4.x, r4.z
-add r4.y, r4.z, r4.y  // r4.y <- t11
-
-#line 11
-mul r4.z, r1.x, r2.w
-mul r4.z, r3.z, r4.z
-mul r4.w, r0.w, r3.x
-mul r4.w, r3.z, r4.w
-mov r4.w, -r4.w
-add r4.z, r4.w, r4.z
-mul r4.w, r1.x, r2.z
-mul r4.w, r3.w, r4.w
-mov r4.w, -r4.w
-add r4.z, r4.w, r4.z
-mul r4.w, r0.z, r3.x
-mul r4.w, r3.w, r4.w
-add r4.z, r4.w, r4.z
-mul r4.w, r0.w, r2.z
-mul r4.w, r4.x, r4.w
-add r4.z, r4.w, r4.z
-mul r4.w, r0.z, r2.w
-mul r4.w, r4.x, r4.w
-mov r4.w, -r4.w
-add r4.z, r4.w, r4.z  // r4.z <- t12
-
-#line 12
-mul r4.w, r0.w, r2.x
-mul r4.w, r3.z, r4.w
-mul r5.x, r1.w, r1.x
-mul r5.x, r3.z, r5.x
-mov r5.x, -r5.x
-add r4.w, r4.w, r5.x
-mul r5.x, r1.z, r1.x
-mul r5.x, r3.w, r5.x
-add r4.w, r4.w, r5.x
-mul r5.x, r0.z, r2.x
-mul r5.x, r3.w, r5.x
-mov r5.x, -r5.x
-add r4.w, r4.w, r5.x
-mul r5.x, r0.w, r1.z
-mul r5.x, r4.x, r5.x
-mov r5.x, -r5.x
-add r4.w, r4.w, r5.x
-mul r5.x, r0.z, r1.w
-mul r5.x, r4.x, r5.x
-add r4.w, r4.w, r5.x  // r4.w <- t13
-
-#line 13
-mul r5.x, r1.w, r1.x
-mul r5.x, r2.z, r5.x
-mul r5.y, r0.w, r2.x
-mul r5.y, r2.z, r5.y
-mov r5.y, -r5.y
-add r5.x, r5.y, r5.x
-mul r5.y, r1.z, r1.x
-mul r5.y, r2.w, r5.y
-mov r5.y, -r5.y
-add r5.x, r5.y, r5.x
-mul r5.y, r0.z, r2.x
-mul r5.y, r2.w, r5.y
-add r5.x, r5.y, r5.x
-mul r5.y, r0.w, r1.z
-mul r5.y, r3.x, r5.y
-add r5.x, r5.y, r5.x
-mul r5.y, r0.z, r1.w
-mul r5.y, r3.x, r5.y
-mov r5.y, -r5.y
-add r5.x, r5.y, r5.x  // r5.x <- t14
-
-#line 15
-mul r5.y, r0.y, r4.y
-mul r5.z, r1.y, r4.z
-add r5.y, r5.z, r5.y
-mul r5.z, r2.y, r4.w
-add r5.y, r5.z, r5.y
-mul r5.x, r3.y, r5.x
-add r5.x, r5.x, r5.y  // r5.x <- det
-
-#line 16
-div r5.x, l(1.000000), r5.x  // r5.x <- idet
-
-#line 20
-mul r6.x, r4.y, r5.x  // r6.x <- ret._m00
-
-#line 21
-mul r4.y, r2.w, r2.x
-mul r4.y, r3.y, r4.y
-mul r5.y, r1.w, r3.x
-mul r5.y, r3.y, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r2.y, r2.x
-mul r5.y, r3.w, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r3.x
-mul r5.y, r3.w, r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.w, r2.y
-mul r5.y, r4.x, r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r2.w
-mul r5.y, r4.x, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r6.y, r5.x, r4.y  // r6.y <- ret._m01
-
-#line 22
-mul r4.y, r1.z, r3.x
-mul r4.y, r3.y, r4.y
-mul r5.y, r2.z, r2.x
-mul r5.y, r3.y, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r2.y, r2.x
-mul r5.y, r3.z, r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r3.x
-mul r5.y, r3.z, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.z, r2.y
-mul r5.y, r4.x, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r2.z
-mul r5.y, r4.x, r5.y
-add r4.y, r4.y, r5.y
-mul r6.z, r5.x, r4.y  // r6.z <- ret._m02
-
-#line 23
-mul r4.y, r1.w, r2.z
-mul r4.y, r3.y, r4.y
-mul r5.y, r1.z, r2.w
-mul r5.y, r3.y, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.w, r2.y
-mul r5.y, r3.z, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r2.w
-mul r5.y, r3.z, r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.z, r2.y
-mul r5.y, r3.w, r5.y
-add r4.y, r4.y, r5.y
-mul r5.y, r1.y, r2.z
-mul r5.y, r3.w, r5.y
-mov r5.y, -r5.y
-add r4.y, r4.y, r5.y
-mul r6.w, r5.x, r4.y  // r6.w <- ret._m03
-
-#line 25
-mul r7.x, r4.z, r5.x  // r7.x <- ret._m10
-
-#line 26
-mul r4.y, r0.w, r3.x
-mul r4.y, r3.y, r4.y
-mul r4.z, r1.x, r2.w
-mul r4.z, r3.y, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r1.x, r2.y
-mul r4.z, r3.w, r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r0.y, r3.x
-mul r4.z, r3.w, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r0.w, r2.y
-mul r4.z, r4.x, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r0.y, r2.w
-mul r4.z, r4.x, r4.z
-add r4.y, r4.z, r4.y
-mul r7.y, r5.x, r4.y  // r7.y <- ret._m11
-
-#line 27
-mul r4.y, r1.x, r2.z
-mul r4.y, r3.y, r4.y
-mul r4.z, r0.z, r3.x
-mul r4.z, r3.y, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r4.z, r1.x, r2.y
-mul r4.z, r3.z, r4.z
-mov r4.z, -r4.z
-add r4.y, r4.z, r4.y
-mul r3.x, r0.y, r3.x
-mul r3.x, r3.z, r3.x
-add r3.x, r3.x, r4.y
-mul r4.y, r0.z, r2.y
-mul r4.y, r4.x, r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.y, r2.z
-mul r4.y, r4.x, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r7.z, r5.x, r3.x  // r7.z <- ret._m12
-
-#line 28
-mul r3.x, r0.z, r2.w
-mul r3.x, r3.y, r3.x
-mul r4.y, r0.w, r2.z
-mul r4.y, r3.y, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.w, r2.y
-mul r4.y, r3.z, r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.y, r2.w
-mul r4.y, r3.z, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.z, r2.y
-mul r4.y, r3.w, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.y, r2.z
-mul r4.y, r3.w, r4.y
-add r3.x, r3.x, r4.y
-mul r7.w, r5.x, r3.x  // r7.w <- ret._m13
-
-#line 30
-mul r8.x, r4.w, r5.x  // r8.x <- ret._m20
-
-#line 31
-mul r3.x, r1.w, r1.x
-mul r3.x, r3.y, r3.x
-mul r4.y, r0.w, r2.x
-mul r4.y, r3.y, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r1.y, r1.x
-mul r4.y, r3.w, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.y, r2.x
-mul r4.y, r3.w, r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.w, r1.y
-mul r4.y, r4.x, r4.y
-add r3.x, r3.x, r4.y
-mul r4.y, r0.y, r1.w
-mul r4.y, r4.x, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r8.y, r5.x, r3.x  // r8.y <- ret._m21
-
-#line 32
-mul r3.x, r0.z, r2.x
-mul r3.x, r3.y, r3.x
-mul r4.y, r1.z, r1.x
-mul r4.y, r3.y, r4.y
-mov r4.y, -r4.y
-add r3.x, r3.x, r4.y
-mul r1.x, r1.y, r1.x
-mul r1.x, r3.z, r1.x
-add r1.x, r1.x, r3.x
-mul r2.x, r0.y, r2.x
-mul r2.x, r3.z, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.z, r1.y
-mul r2.x, r4.x, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.y, r1.z
-mul r2.x, r4.x, r2.x
-add r1.x, r1.x, r2.x
-mul r8.z, r5.x, r1.x  // r8.z <- ret._m22
-
-#line 33
-mul r1.x, r0.w, r1.z
-mul r1.x, r3.y, r1.x
-mul r2.x, r0.z, r1.w
-mul r2.x, r3.y, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.w, r1.y
-mul r2.x, r3.z, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.y, r1.w
-mul r2.x, r3.z, r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.z, r1.y
-mul r2.x, r3.w, r2.x
-add r1.x, r1.x, r2.x
-mul r2.x, r0.y, r1.z
-mul r2.x, r3.w, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r8.w, r5.x, r1.x  // r8.w <- ret._m23
-
-#line 38
-mul r1.x, r0.z, r1.w
-mul r1.x, r2.y, r1.x
-mul r2.x, r0.w, r1.z
-mul r2.x, r2.y, r2.x
-mov r2.x, -r2.x
-add r1.x, r1.x, r2.x
-mul r0.w, r0.w, r1.y
-mul r0.w, r2.z, r0.w
-add r0.w, r0.w, r1.x
-mul r1.x, r0.y, r1.w
-mul r1.x, r2.z, r1.x
-mov r1.x, -r1.x
-add r0.w, r0.w, r1.x
-mul r0.z, r0.z, r1.y
-mul r0.z, r2.w, r0.z
-mov r0.z, -r0.z
-add r0.z, r0.z, r0.w
-mul r0.y, r0.y, r1.z
-mul r0.y, r2.w, r0.y
-add r0.y, r0.y, r0.z
-mul r1.w, r5.x, r0.y  // r1.w <- ret._m33
-
-#line 40
-mov r6.x, r6.x  // r6.x <- <inverse return value>._m00
-mov r6.y, r6.y  // r6.y <- <inverse return value>._m01
-mov r6.z, r6.z  // r6.z <- <inverse return value>._m02
-mov r6.w, r6.w  // r6.w <- <inverse return value>._m03
-mov r7.x, r7.x  // r7.x <- <inverse return value>._m10
-mov r7.y, r7.y  // r7.y <- <inverse return value>._m11
-mov r7.z, r7.z  // r7.z <- <inverse return value>._m12
-mov r7.w, r7.w  // r7.w <- <inverse return value>._m13
-mov r8.x, r8.x  // r8.x <- <inverse return value>._m20
-mov r8.y, r8.y  // r8.y <- <inverse return value>._m21
-mov r8.z, r8.z  // r8.z <- <inverse return value>._m22
-mov r8.w, r8.w  // r8.w <- <inverse return value>._m23
-mov r1.w, r1.w  // r1.w <- <inverse return value>._m33
-
-#line 22 "D:\Repo\Engine\particle_vs.hlsl"
-mov r6.xyzw, r6.xyzw  // r6.x <- world._m00; r6.y <- world._m01; r6.z <- world._m02; r6.w <- world._m03
-mov r7.xyzw, r7.xyzw  // r7.x <- world._m10; r7.y <- world._m11; r7.z <- world._m12; r7.w <- world._m13
-mov r8.xyzw, r8.xyzw  // r8.x <- world._m20; r8.y <- world._m21; r8.z <- world._m22; r8.w <- world._m23
-mov r1.w, r1.w  // r1.w <- world._m33
-
-#line 23
-mov r1.x, l(0)  // r1.x <- world._m30
-
-#line 24
-mov r1.y, l(0)  // r1.y <- world._m31
-
-#line 25
-mov r1.z, l(0)  // r1.z <- world._m32
-
-#line 27
-mov r2.xyz, l(1.000000,0,0,0)  // r2.x <- trans._m00; r2.y <- trans._m10; r2.z <- trans._m20
-mov r2.w, v4.x  // r2.w <- trans._m30
-mov r3.xyz, l(0,1.000000,0,0)  // r3.x <- trans._m01; r3.y <- trans._m11; r3.z <- trans._m21
-mov r3.w, v4.y  // r3.w <- trans._m31
-mov r4.xyz, l(0,0,1.000000,0)  // r4.x <- trans._m02; r4.y <- trans._m12; r4.z <- trans._m22
-mov r4.w, v4.z  // r4.w <- trans._m32
-mov r5.xyzw, l(0,0,0,1.000000)  // r5.x <- trans._m03; r5.y <- trans._m13; r5.z <- trans._m23; r5.w <- trans._m33
-
-#line 32
+#line 34
 mov r9.x, v5.x  // r9.x <- scl._m00
 mov r9.yzw, l(0,0,0,0)  // r9.y <- scl._m10; r9.z <- scl._m20; r9.w <- scl._m30
 mov r10.xzw, l(0,0,0,0)  // r10.x <- scl._m01; r10.z <- scl._m21; r10.w <- scl._m31
@@ -527,64 +146,64 @@ mov r11.xyw, l(0,0,0,0)  // r11.x <- scl._m02; r11.y <- scl._m12; r11.w <- scl._
 mov r11.z, v5.z  // r11.z <- scl._m22
 mov r12.xyzw, l(0,0,0,1.000000)  // r12.x <- scl._m03; r12.y <- scl._m13; r12.z <- scl._m23; r12.w <- scl._m33
 
-#line 37
-dp4 r13.x, r6.xyzw, r9.xyzw  // r13.x <- world._m00
-dp4 r13.y, r6.xyzw, r10.xyzw  // r13.y <- world._m01
-dp4 r13.z, r6.xyzw, r11.xyzw  // r13.z <- world._m02
-dp4 r13.w, r6.xyzw, r12.xyzw  // r13.w <- world._m03
-dp4 r6.x, r7.xyzw, r9.xyzw  // r6.x <- world._m10
-dp4 r6.y, r7.xyzw, r10.xyzw  // r6.y <- world._m11
-dp4 r6.z, r7.xyzw, r11.xyzw  // r6.z <- world._m12
-dp4 r6.w, r7.xyzw, r12.xyzw  // r6.w <- world._m13
-dp4 r7.x, r8.xyzw, r9.xyzw  // r7.x <- world._m20
-dp4 r7.y, r8.xyzw, r10.xyzw  // r7.y <- world._m21
-dp4 r7.z, r8.xyzw, r11.xyzw  // r7.z <- world._m22
-dp4 r7.w, r8.xyzw, r12.xyzw  // r7.w <- world._m23
-dp4 r8.x, r1.xyzw, r9.xyzw  // r8.x <- world._m30
-dp4 r8.y, r1.xyzw, r10.xyzw  // r8.y <- world._m31
-dp4 r8.z, r1.xyzw, r11.xyzw  // r8.z <- world._m32
-dp4 r8.w, r1.xyzw, r12.xyzw  // r8.w <- world._m33
-
-#line 38
-dp4 r0.y, r13.xyzw, r2.xyzw  // r0.y <- world._m00
-dp4 r0.z, r13.xyzw, r3.xyzw  // r0.z <- world._m01
-dp4 r0.w, r13.xyzw, r4.xyzw  // r0.w <- world._m02
-dp4 r1.x, r13.xyzw, r5.xyzw  // r1.x <- world._m03
-dp4 r1.y, r6.xyzw, r2.xyzw  // r1.y <- world._m10
-dp4 r1.z, r6.xyzw, r3.xyzw  // r1.z <- world._m11
-dp4 r1.w, r6.xyzw, r4.xyzw  // r1.w <- world._m12
-dp4 r6.x, r6.xyzw, r5.xyzw  // r6.x <- world._m13
-dp4 r6.y, r7.xyzw, r2.xyzw  // r6.y <- world._m20
-dp4 r6.z, r7.xyzw, r3.xyzw  // r6.z <- world._m21
-dp4 r6.w, r7.xyzw, r4.xyzw  // r6.w <- world._m22
-dp4 r7.x, r7.xyzw, r5.xyzw  // r7.x <- world._m23
-dp4 r2.x, r8.xyzw, r2.xyzw  // r2.x <- world._m30
-dp4 r2.y, r8.xyzw, r3.xyzw  // r2.y <- world._m31
-dp4 r2.z, r8.xyzw, r4.xyzw  // r2.z <- world._m32
-dp4 r2.w, r8.xyzw, r5.xyzw  // r2.w <- world._m33
+#line 39
+dp4 r13.x, r1.xyzw, r9.xyzw  // r13.x <- world._m00
+dp4 r13.y, r1.xyzw, r10.xyzw  // r13.y <- world._m01
+dp4 r13.z, r1.xyzw, r11.xyzw  // r13.z <- world._m02
+dp4 r13.w, r1.xyzw, r12.xyzw  // r13.w <- world._m03
+dp4 r1.x, r2.xyzw, r9.xyzw  // r1.x <- world._m10
+dp4 r1.y, r2.xyzw, r10.xyzw  // r1.y <- world._m11
+dp4 r1.z, r2.xyzw, r11.xyzw  // r1.z <- world._m12
+dp4 r1.w, r2.xyzw, r12.xyzw  // r1.w <- world._m13
+dp4 r2.x, r3.xyzw, r9.xyzw  // r2.x <- world._m20
+dp4 r2.y, r3.xyzw, r10.xyzw  // r2.y <- world._m21
+dp4 r2.z, r3.xyzw, r11.xyzw  // r2.z <- world._m22
+dp4 r2.w, r3.xyzw, r12.xyzw  // r2.w <- world._m23
+dp4 r3.x, r4.xyzw, r9.xyzw  // r3.x <- world._m30
+dp4 r3.y, r4.xyzw, r10.xyzw  // r3.y <- world._m31
+dp4 r3.z, r4.xyzw, r11.xyzw  // r3.z <- world._m32
+dp4 r3.w, r4.xyzw, r12.xyzw  // r3.w <- world._m33
 
 #line 40
-mul r3.xyzw, cb1[0].xxxx, cb1[4].xyzw
-mul r4.xyzw, cb1[0].yyyy, cb1[5].xyzw
-add r3.xyzw, r3.xyzw, r4.xyzw
-mul r4.xyzw, cb1[0].zzzz, cb1[6].xyzw
-add r3.xyzw, r3.xyzw, r4.xyzw
-mul r4.xyzw, cb1[0].wwww, cb1[7].xyzw
-add r3.xyzw, r3.xyzw, r4.xyzw
-mul r4.xyzw, cb1[1].xxxx, cb1[4].xyzw
-mul r5.xyzw, cb1[1].yyyy, cb1[5].xyzw
-add r4.xyzw, r4.xyzw, r5.xyzw
-mul r5.xyzw, cb1[1].zzzz, cb1[6].xyzw
-add r4.xyzw, r4.xyzw, r5.xyzw
-mul r5.xyzw, cb1[1].wwww, cb1[7].xyzw
-add r4.xyzw, r4.xyzw, r5.xyzw
-mul r5.xyzw, cb1[2].xxxx, cb1[4].xyzw
+dp4 r0.y, r13.xyzw, r5.xyzw  // r0.y <- world._m00
+dp4 r0.z, r13.xyzw, r6.xyzw  // r0.z <- world._m01
+dp4 r0.w, r13.xyzw, r7.xyzw  // r0.w <- world._m02
+dp4 r4.x, r13.xyzw, r8.xyzw  // r4.x <- world._m03
+dp4 r4.y, r1.xyzw, r5.xyzw  // r4.y <- world._m10
+dp4 r4.z, r1.xyzw, r6.xyzw  // r4.z <- world._m11
+dp4 r4.w, r1.xyzw, r7.xyzw  // r4.w <- world._m12
+dp4 r1.x, r1.xyzw, r8.xyzw  // r1.x <- world._m13
+dp4 r1.y, r2.xyzw, r5.xyzw  // r1.y <- world._m20
+dp4 r1.z, r2.xyzw, r6.xyzw  // r1.z <- world._m21
+dp4 r1.w, r2.xyzw, r7.xyzw  // r1.w <- world._m22
+dp4 r2.x, r2.xyzw, r8.xyzw  // r2.x <- world._m23
+dp4 r2.y, r3.xyzw, r5.xyzw  // r2.y <- world._m30
+dp4 r2.z, r3.xyzw, r6.xyzw  // r2.z <- world._m31
+dp4 r2.w, r3.xyzw, r7.xyzw  // r2.w <- world._m32
+dp4 r3.x, r3.xyzw, r8.xyzw  // r3.x <- world._m33
+
+#line 42
+mul r5.xyzw, cb1[0].xxxx, cb1[4].xyzw
+mul r6.xyzw, cb1[0].yyyy, cb1[5].xyzw
+add r5.xyzw, r5.xyzw, r6.xyzw
+mul r6.xyzw, cb1[0].zzzz, cb1[6].xyzw
+add r5.xyzw, r5.xyzw, r6.xyzw
+mul r6.xyzw, cb1[0].wwww, cb1[7].xyzw
+add r5.xyzw, r5.xyzw, r6.xyzw
+mul r6.xyzw, cb1[1].xxxx, cb1[4].xyzw
+mul r7.xyzw, cb1[1].yyyy, cb1[5].xyzw
+add r6.xyzw, r6.xyzw, r7.xyzw
+mul r7.xyzw, cb1[1].zzzz, cb1[6].xyzw
+add r6.xyzw, r6.xyzw, r7.xyzw
+mul r7.xyzw, cb1[1].wwww, cb1[7].xyzw
+add r6.xyzw, r6.xyzw, r7.xyzw
+mul r7.xyzw, cb1[2].xxxx, cb1[4].xyzw
 mul r8.xyzw, cb1[2].yyyy, cb1[5].xyzw
-add r5.xyzw, r5.xyzw, r8.xyzw
+add r7.xyzw, r7.xyzw, r8.xyzw
 mul r8.xyzw, cb1[2].zzzz, cb1[6].xyzw
-add r5.xyzw, r5.xyzw, r8.xyzw
+add r7.xyzw, r7.xyzw, r8.xyzw
 mul r8.xyzw, cb1[2].wwww, cb1[7].xyzw
-add r5.xyzw, r5.xyzw, r8.xyzw
+add r7.xyzw, r7.xyzw, r8.xyzw
 mul r8.xyzw, cb1[3].xxxx, cb1[4].xyzw
 mul r9.xyzw, cb1[3].yyyy, cb1[5].xyzw
 add r8.xyzw, r8.xyzw, r9.xyzw
@@ -592,56 +211,56 @@ mul r9.xyzw, cb1[3].zzzz, cb1[6].xyzw
 add r8.xyzw, r8.xyzw, r9.xyzw
 mul r9.xyzw, cb1[3].wwww, cb1[7].xyzw
 add r8.xyzw, r8.xyzw, r9.xyzw
-mul r9.xyzw, r0.yyyy, r3.xyzw
-mul r10.xyzw, r0.zzzz, r4.xyzw
+mul r9.xyzw, r0.yyyy, r5.xyzw
+mul r10.xyzw, r0.zzzz, r6.xyzw
 add r9.xyzw, r9.xyzw, r10.xyzw
-mul r10.xyzw, r0.wwww, r5.xyzw
+mul r10.xyzw, r0.wwww, r7.xyzw
 add r9.xyzw, r9.xyzw, r10.xyzw
+mul r10.xyzw, r4.xxxx, r8.xyzw
+add r9.xyzw, r9.xyzw, r10.xyzw
+mul r10.xyzw, r4.yyyy, r5.xyzw
+mul r11.xyzw, r4.zzzz, r6.xyzw
+add r10.xyzw, r10.xyzw, r11.xyzw
+mul r4.xyzw, r4.wwww, r7.xyzw
+add r4.xyzw, r4.xyzw, r10.xyzw
 mul r10.xyzw, r1.xxxx, r8.xyzw
-add r9.xyzw, r9.xyzw, r10.xyzw
-mul r10.xyzw, r1.yyyy, r3.xyzw
-mul r11.xyzw, r1.zzzz, r4.xyzw
+add r4.xyzw, r4.xyzw, r10.xyzw
+mul r10.xyzw, r1.yyyy, r5.xyzw
+mul r11.xyzw, r1.zzzz, r6.xyzw
 add r10.xyzw, r10.xyzw, r11.xyzw
-mul r1.xyzw, r1.wwww, r5.xyzw
+mul r1.xyzw, r1.wwww, r7.xyzw
 add r1.xyzw, r1.xyzw, r10.xyzw
-mul r10.xyzw, r6.xxxx, r8.xyzw
+mul r10.xyzw, r2.xxxx, r8.xyzw
 add r1.xyzw, r1.xyzw, r10.xyzw
-mul r10.xyzw, r3.xyzw, r6.yyyy
-mul r11.xyzw, r4.xyzw, r6.zzzz
-add r10.xyzw, r10.xyzw, r11.xyzw
-mul r6.xyzw, r5.xyzw, r6.wwww
-add r6.xyzw, r6.xyzw, r10.xyzw
-mul r7.xyzw, r7.xxxx, r8.xyzw
-add r6.xyzw, r6.xyzw, r7.xyzw
-mul r3.xyzw, r2.xxxx, r3.xyzw
-mul r4.xyzw, r2.yyyy, r4.xyzw
-add r3.xyzw, r3.xyzw, r4.xyzw
-mul r4.xyzw, r2.zzzz, r5.xyzw
-add r3.xyzw, r3.xyzw, r4.xyzw
-mul r2.xyzw, r2.wwww, r8.xyzw
+mul r5.xyzw, r2.yyyy, r5.xyzw
+mul r6.xyzw, r2.zzzz, r6.xyzw
+add r5.xyzw, r5.xyzw, r6.xyzw
+mul r2.xyzw, r2.wwww, r7.xyzw
+add r2.xyzw, r2.xyzw, r5.xyzw
+mul r3.xyzw, r3.xxxx, r8.xyzw
 add r2.xyzw, r2.xyzw, r3.xyzw
 mul r3.xyzw, r9.xyzw, v0.xxxx
-mul r1.xyzw, r1.xyzw, v0.yyyy
-add r1.xyzw, r1.xyzw, r3.xyzw
-mul r3.xyzw, r6.xyzw, v0.zzzz
+mul r4.xyzw, r4.xyzw, v0.yyyy
+add r3.xyzw, r3.xyzw, r4.xyzw
+mul r1.xyzw, r1.xyzw, v0.zzzz
 add r1.xyzw, r1.xyzw, r3.xyzw
 mul r2.xyzw, r2.xyzw, v0.wwww
 add r1.xyzw, r1.xyzw, r2.xyzw  // r1.x <- output.position.x; r1.y <- output.position.y; r1.z <- output.position.z; r1.w <- output.position.w
 
-#line 41
+#line 43
 mov r0.yz, v3.xxyx  // r0.y <- output.texcoord.x; r0.z <- output.texcoord.y
 
-#line 42
+#line 44
 mov r2.xyzw, v6.xyzw  // r2.x <- output.color.x; r2.y <- output.color.y; r2.z <- output.color.z; r2.w <- output.color.w
 
-#line 43
+#line 45
 mov r3.xyzw, v1.xyzw  // r3.x <- output.normal.x; r3.y <- output.normal.y; r3.z <- output.normal.z; r3.w <- output.normal.w
 
-#line 45
+#line 47
 mov o0.xyzw, r1.xyzw  // o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 mov o1.xyzw, r3.xyzw  // o1.x <- <main return value>.normal.x; o1.y <- <main return value>.normal.y; o1.z <- <main return value>.normal.z; o1.w <- <main return value>.normal.w
 mov o2.xyzw, r2.xyzw  // o2.x <- <main return value>.color.x; o2.y <- <main return value>.color.y; o2.z <- <main return value>.color.z; o2.w <- <main return value>.color.w
 mov o3.xy, r0.yzyy  // o3.x <- <main return value>.texcoord.x; o3.y <- <main return value>.texcoord.y
 mov o4.x, r0.x  // o4.x <- <main return value>.instUse
 ret 
-// Approximately 470 instruction slots used
+// Approximately 145 instruction slots used

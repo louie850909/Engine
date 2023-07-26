@@ -5,10 +5,12 @@ VS_OUT main(VS_IN input)
 {
     matrix world, scl, trans;
     // ビルドボード処理
-    world = inverse(view);
-    world._41 = 0.0f;
-    world._42 = 0.0f;
-    world._43 = 0.0f;
+    world = float4x4(
+        view._11, view._21, view._31, 0.0f,
+        view._12, view._22, view._32, 0.0f,
+        view._13, view._23, view._33, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    );
     
     trans = float4x4(1.0f, 0.0f, 0.0f, 0.0f,
                      0.0f, 1.0f, 0.0f, 0.0f,

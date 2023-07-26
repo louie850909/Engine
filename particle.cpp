@@ -1,6 +1,6 @@
 #include "particle.h"
 
-Particle::Particle(render r, float width, float height, int maxInstanceCount)
+Particle::Particle(render r, float width, float height, int maxInstanceCount, bool isAddBlend, bool isDepthTest)
 {
 	this->position = { 0,0,0 };
 	this->scale = { 1,1,1 };
@@ -8,6 +8,8 @@ Particle::Particle(render r, float width, float height, int maxInstanceCount)
 	this->width = width;
 	this->height = height;
 	this->maxInstanceCount = maxInstanceCount;
+	this->isAddBlend = isAddBlend;
+	this->isDepthTest = isDepthTest;
 
 	// 頂点情報のセット
 	vertex vertices[]
@@ -105,8 +107,17 @@ Particle::Particle(render r, float width, float height, int maxInstanceCount)
 
 void Particle::draw(render r)
 {
-	// 加算合成に設定
-	r.set_blend_state(render::BLEND_ADD);
+	if (isAddBlend)
+	{
+		// 加算合成に設定
+		r.set_blend_state(render::BLEND_ADD);
+	}
+
+	if (!isDepthTest)
+	{
+		// 深度テストを無効に設定
+		r.set_depth_stencil_state(render::DEPTH_TEST_ON_DEPTH_WRITE_OFF);
+	}
 
 	// シェーダー リソースのバインド
 	r.get_immediate_context()->PSSetShaderResources(0, 1, shader_resource_view.GetAddressOf());
@@ -145,23 +156,53 @@ void Particle::draw(render r)
 	// 描画
 	r.get_immediate_context()->DrawInstanced(4, maxInstanceCount, 0, 0);
 
-	// ブレンドステートの解除
-	r.set_blend_state(render::BLEND_ALPHA);
+	if (isAddBlend)
+	{
+		// ブレンドステートの解除
+		r.set_blend_state(render::BLEND_ALPHA);
+	}
+
+	if (!isDepthTest)
+	{
+		// 深度テストと深度書き込みを有効に戻す
+		r.set_depth_stencil_state(render::DEPTH_TEST_ON_DEPTH_WRITE_ON);
+	}
 }
 
-void Particle::addParticle(XMFLOAT3 pos, XMFLOAT3 move, XMFLOAT4 color, int life)
+void Particle::addParticle(XMFLOAT3 pos, XMFLOAT3 move, XMFLOAT3 scl, XMFLOAT4 color, int life, int startidx)
 {
+	if(isFull) 
+		return;
+
 	// 未使用のパーティクルを探す
-	for (int i = 0; i < maxInstanceCount; ++i)
+	for (int i = startidx; i < maxInstanceCount; i++)
 	{
 		if (!instances[i].use)
 		{
 			instances[i].pos = pos;
 			instances[i].move = move;
+			instances[i].scl = scl;
 			instances[i].color = color;
 			instances[i].life = life;
 			instances[i].use = true;
-			break;
+			return;
 		}
 	}
+
+	for (int i = startidx; i < 0; --i)
+	{
+		if (!instances[i].use)
+		{
+			instances[i].pos = pos;
+			instances[i].move = move;
+			instances[i].scl = scl;
+			instances[i].color = color;
+			instances[i].life = life;
+			instances[i].use = true;
+			return;
+		}
+	}
+
+	isFull = true;
+	return;
 }

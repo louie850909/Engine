@@ -10,8 +10,9 @@ float4 main(VS_OUT pin) : SV_TARGET
     if(!pin.instUse)
         discard;
     
-    float4 color = sprite_texture.Sample(linear_sampler, pin.texcoord) * pin.color;
-    if (color.r == 0 && color.g == 0 && color.b == 0)
+    float4 color = sprite_texture.Sample(anisotropic_sampler, pin.texcoord) * pin.color;
+    // to eliminate black border in particle.jpg
+    if (color.r <= 0.004 && color.g <= 0.004 && color.b <= 0.004)
         discard;
     return color;
 }
