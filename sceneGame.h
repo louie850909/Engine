@@ -8,6 +8,7 @@
 #include "billboard.h"
 #include "fountain.h"
 #include "rain.h"
+#include "fire.h"
 
 class SceneGame : public Scene
 {
@@ -28,6 +29,7 @@ private:
 	std::unique_ptr<Billboard> billboards[8];
 	std::unique_ptr<Fountain> Fountains[8];
 	std::unique_ptr<Rain> rains[8];
+	std::unique_ptr<Fire> fires[8];
 	std::unique_ptr<Font> fonts[8];
 	std::unique_ptr<PLAYER> player;
 	std::unique_ptr<STAGE> stage;

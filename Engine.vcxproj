@@ -29,6 +29,7 @@
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="fire.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="fountain.h" />
     <ClInclude Include="framework.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="fire.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="fountain.cpp" />
     <ClCompile Include="framework.cpp" />

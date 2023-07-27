@@ -11,5 +11,4 @@ public:
 
 private:
 	int maxInstanceCount;
-	//float time;
 };

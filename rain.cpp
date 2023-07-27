@@ -1,7 +1,7 @@
 #include "rain.h"
 #include "camera.h"
 
-Rain::Rain(render r, float width, float height, int maxInstanceCount) : Particle(r, width, height, maxInstanceCount, false, true)
+Rain::Rain(render r, float width, float height, int maxInstanceCount) : Particle(r, width, height, maxInstanceCount, true, true)
 {
 	this->maxInstanceCount = maxInstanceCount;
 }
@@ -27,8 +27,6 @@ void Rain::update(float elapsed_time)
 		}
 	}
 
-	//time += elapsed_time;
-
 	// パーティクル発生
 	XMFLOAT3 pos;
 	XMFLOAT3 move;
@@ -37,7 +35,7 @@ void Rain::update(float elapsed_time)
 	float angle, length;
 
 	angle = CAMERA::Instance().get_rotation().y + (float)(rand() % 315 - 157) / 100.0f;
-	length = (float)(rand() % 2000) / 10.0f;
+	length = 200.0f * (float)(rand()) / RAND_MAX;
 
 	// 発生位置はいつでもカメラの前方範囲内
 	pos.x = CAMERA::Instance().get_position().x + sinf(angle) * length;
@@ -55,6 +53,4 @@ void Rain::update(float elapsed_time)
 
 	
 	addParticle(pos, move, scl, XMFLOAT4(1, 1, 1, 1), nLife, startIndex);
-	//time = 0;
-	
 }
