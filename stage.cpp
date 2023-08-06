@@ -1,6 +1,6 @@
 #include "stage.h"
 #include <comdef.h>
-static STAGE* instance = nullptr;
+#include "modelManager.h"
 
 STAGE::STAGE(render* Render)
 {
@@ -8,22 +8,17 @@ STAGE::STAGE(render* Render)
 	position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	scale = XMFLOAT3(10.0f, 10.0f, 10.0f);
-	instance = this;
 }
 
 STAGE::~STAGE()
 {
 }
 
-STAGE& STAGE::Instance()
-{
-	return *instance;
-}
-
 void STAGE::initialize()
 {
 	//mesh = std::make_unique<static_mesh>(Render->get_device(), L".\\resources\\landscape.obj", position, scale, rotation, false);
-	skinnedMesh = std::make_unique<skinned_mesh>(Render->get_device(), ".\\resources\\testStage\\ExampleStage.fbx", false, position, scale, rotation, 0.0f);
+	//skinnedMesh = std::make_unique<skinned_mesh>(Render->get_device(), ".\\resources\\testStage\\ExampleStage.fbx", false, position, scale, rotation, 0.0f);
+	skinnedMesh = ModelManager::getInstance().LoadSkinnedMesh(".\\resources\\testStage\\ExampleStage.fbx", Render, false, position, scale, rotation, 0.0f);
 
 	// 頂点をワールド座標に変換し、分割する
 	XMMATRIX w, s, r, t;

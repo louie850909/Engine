@@ -48,8 +48,7 @@ void PLAYER::initialize()
 
 void PLAYER::update(float elapsed_time)
 {
-	XMFLOAT3 prePos = position;
-	XMFLOAT3 preRot = rotation;
+	prePos = position;
 
 	switch (state)
 	{
@@ -80,64 +79,6 @@ void PLAYER::update(float elapsed_time)
 #endif // _DEBUG
 
 	updateAnimation(elapsed_time);
-
-	HitResult hitResult;
-
-	// プレイヤーの位置判定
-	if (position.x < STAGE::Instance().center.x && position.y < STAGE::Instance().center.y && position.z < STAGE::Instance().center.z)
-		placeIndex = 0;
-	else if (position.x > STAGE::Instance().center.x && position.y < STAGE::Instance().center.y && position.z < STAGE::Instance().center.z)
-		placeIndex = 1;
-	else if (position.x < STAGE::Instance().center.x && position.y > STAGE::Instance().center.y && position.z < STAGE::Instance().center.z)
-		placeIndex = 2;
-	else if (position.x > STAGE::Instance().center.x && position.y > STAGE::Instance().center.y && position.z < STAGE::Instance().center.z)
-		placeIndex = 3;
-	else if (position.x < STAGE::Instance().center.x && position.y < STAGE::Instance().center.y && position.z > STAGE::Instance().center.z)
-		placeIndex = 4;
-	else if (position.x > STAGE::Instance().center.x && position.y < STAGE::Instance().center.y && position.z > STAGE::Instance().center.z)
-		placeIndex = 5;
-	else if (position.x < STAGE::Instance().center.x && position.y > STAGE::Instance().center.y && position.z > STAGE::Instance().center.z)
-		placeIndex = 6;
-	else if (position.x > STAGE::Instance().center.x && position.y > STAGE::Instance().center.y && position.z > STAGE::Instance().center.z)
-		placeIndex = 7;
-
-	// 床判定
-	if (Collision::VsStage(XMFLOAT3(position.x, position.y + 15.0f, position.z),
-		XMFLOAT3(position.x, position.y - 1.0f, position.z), STAGE::Instance().subDivisions[placeIndex], hitResult))
-	{
-		position.y = hitResult.Pos.y;
-	}
-	else
-	{
-		position.y -= 9.8f * 10 * elapsed_time;
-	}
-
-	// 壁判定
-	if (Collision::VsStage(XMFLOAT3(position.x, position.y + 10.0f, position.z),
-		XMFLOAT3(position.x + sinf(rotation.y) * 3, position.y + 5.0f, position.z + cosf(rotation.y) * 3),
-		STAGE::Instance().subDivisions[placeIndex], hitResult))
-	{
-		position = prePos;
-	}
-
-	//// 床判定
-	//if (Collision::RayVsSkinnedModel(XMFLOAT3(position.x, position.y + 15.0f, position.z),
-	//	XMFLOAT3(position.x, position.y - 1.0f, position.z), STAGE::Instance().skinnedMesh.get(), hitResult))
-	//{
-	//	position.y = hitResult.Pos.y;
-	//}
-	//else
-	//{
-	//	position.y -= 9.8f * 10 * elapsed_time;
-	//}
-
-	//// 壁判定
-	//if (Collision::RayVsSkinnedModel(XMFLOAT3(position.x, position.y + 10.0f, position.z),
-	//	XMFLOAT3(position.x + sinf(rotation.y) * 3, position.y + 10.0f, position.z + cosf(rotation.y) * 3), 
-	//	STAGE::Instance().skinnedMesh.get(), hitResult))
-	//{
-	//	position = prePos;
-	//}
 
 	mesh.get()->position = position;
 	mesh.get()->rotation = rotation;

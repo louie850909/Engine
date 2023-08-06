@@ -15,23 +15,6 @@ struct HitResult
 	int materialIndex{ -1 };
 };
 
-struct OctreeNode
-{
-	DirectX::XMFLOAT3 center; // Center of the node
-	float size;               // Length of the sides of the node
-	OctreeNode* children[8];  // Child nodes
-	std::vector<GAME_OBJECT::vertex> vertices; // Vertices in this octant
-
-	// Initialize with center and size
-	OctreeNode(DirectX::XMFLOAT3 center, float size)
-		: center(center), size(size)
-	{
-		// Initialize children to null
-		for (int i = 0; i < 8; i++)
-			children[i] = nullptr;
-	}
-};
-
 class Collision
 {
 

@@ -18,13 +18,11 @@ public :
 	XMFLOAT3 scale;
 	XMFLOAT3 center;
 
-	std::unique_ptr<static_mesh> mesh;
-	std::unique_ptr<skinned_mesh> skinnedMesh;
+	std::shared_ptr<static_mesh> mesh;
+	std::shared_ptr<skinned_mesh> skinnedMesh;
 
 	STAGE(render* Render);
 	~STAGE();
-
-	static STAGE& Instance();
 
 	void initialize();
 	void update(float elapsed_time);

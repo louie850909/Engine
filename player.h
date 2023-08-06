@@ -22,6 +22,10 @@ public:
 
 	bool InputMove(float elapsed_time);
 	bool InputJump(float elapsed_time);
+
+	int placeIndex = -1;
+	XMFLOAT3 prePos;
+
 private:
 	enum class State
 	{
@@ -31,7 +35,6 @@ private:
 	};
 
 	State state = State::Idle;
-	int placeIndex = -1;
 
 	void toIdle();
 	void updateIdle(float elapsed_time);
@@ -43,5 +46,5 @@ private:
 	void updateJump(float elapsed_time);
 
 	Effect* effect = nullptr;
-	std::unique_ptr<AudioSource> WalkSE;
+	std::shared_ptr<AudioSource> WalkSE;
 };

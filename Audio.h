@@ -2,6 +2,8 @@
 
 #include <xaudio2.h>
 #include "AudioSource.h"
+#include <map>
+#include <string>
 
 // オーディオ
 class Audio
@@ -18,7 +20,7 @@ public:
 	}
 
 	// オーディオソース読み込み
-	std::unique_ptr<AudioSource> LoadAudioSource(const char* filename);
+	std::shared_ptr<AudioSource> LoadAudioSource(const char* filename);
 
 private:
 	Audio();
@@ -26,4 +28,7 @@ private:
 
 	IXAudio2*				xaudio = nullptr;
 	IXAudio2MasteringVoice* masteringVoice = nullptr;
+
+	using AudioSourceMap = std::map<std::string, std::shared_ptr<AudioSource>>;
+	AudioSourceMap audioSources;
 };

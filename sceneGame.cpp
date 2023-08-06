@@ -2,6 +2,7 @@
 #include "sceneManager.h"
 #include "sceneLogo.h"
 #include "EffectManager.h"
+#include "collision.h"
 
 SceneGame::SceneGame(render* Render)
 {
@@ -32,6 +33,9 @@ void SceneGame::Init()
 	stage->initialize();
 
 	fonts[0] = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\test\\test.fnt", 1024);
+
+	BGM = Audio::Instance().LoadAudioSource(".\\resources\\BGM\\BGM_Game.wav");
+	BGM->Play(true);
 	
 	isInit = true;
 }
@@ -47,6 +51,8 @@ void SceneGame::Update(float elapsed_time)
 	fires[0]->update(elapsed_time);
 	fires[1]->update(elapsed_time);
 	EffectManager::Instance().Update(elapsed_time);
+
+	CollosionUpdate(elapsed_time);
 
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	if (gamePad.GetButtonDown() == gamePad.BTN_START)
@@ -95,6 +101,7 @@ void SceneGame::Draw(float elapsed_time)
 
 void SceneGame::Uninit()
 {
+	BGM->Stop();
 	light.release();
 	player.release();
 	stage.release();
@@ -107,4 +114,49 @@ void SceneGame::Uninit()
 	{
 		Render = nullptr;
 	}	
+}
+
+void SceneGame::CollosionUpdate(float elapsed_time)
+{
+	// プレイヤーとステージの当たり判定
+	{
+		HitResult player_hitResult;
+
+		// プレイヤーの位置判定
+		if(player->position.x < stage->center.x && player->position.y < stage->center.y && player->position.z < stage->center.z)
+			player->placeIndex = 0;
+		else if (player->position.x > stage->center.x && player->position.y < stage->center.y && player->position.z < stage->center.z)
+			player->placeIndex = 1;
+		else if (player->position.x < stage->center.x && player->position.y > stage->center.y && player->position.z < stage->center.z)
+			player->placeIndex = 2;
+		else if (player->position.x > stage->center.x && player->position.y > stage->center.y && player->position.z < stage->center.z)
+			player->placeIndex = 3;
+		else if (player->position.x < stage->center.x && player->position.y < stage->center.y && player->position.z > stage->center.z)
+			player->placeIndex = 4;
+		else if (player->position.x > stage->center.x && player->position.y < stage->center.y && player->position.z > stage->center.z)
+			player->placeIndex = 5;
+		else if (player->position.x < stage->center.x && player->position.y > stage->center.y && player->position.z > stage->center.z)
+			player->placeIndex = 6;
+		else if (player->position.x > stage->center.x && player->position.y > stage->center.y && player->position.z > stage->center.z)
+			player->placeIndex = 7;
+
+		// 床判定
+		if (Collision::VsStage(XMFLOAT3(player->position.x, player->position.y + 15.0f, player->position.z),
+			XMFLOAT3(player->position.x, player->position.y - 1.0f, player->position.z), stage->subDivisions[player->placeIndex], player_hitResult))
+		{
+			player->position.y = player_hitResult.Pos.y;
+		}
+		else
+		{
+			player->position.y -= 9.8f * 10 * elapsed_time;
+		}
+
+		// 壁判定
+		if (Collision::VsStage(XMFLOAT3(player->position.x, player->position.y + 10.0f, player->position.z),
+			XMFLOAT3(player->position.x + sinf(player->rotation.y) * 3, player->position.y + 5.0f, player->position.z + cosf(player->rotation.y) * 3),
+			stage->subDivisions[player->placeIndex], player_hitResult))
+		{
+			player->position = player->prePos;
+		}
+	}
 }

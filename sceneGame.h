@@ -9,6 +9,8 @@
 #include "fountain.h"
 #include "rain.h"
 #include "fire.h"
+#include "Audio.h"
+#include "AudioResource.h"
 
 class SceneGame : public Scene
 {
@@ -20,6 +22,8 @@ public:
 	void Update(float elapsed_time) override;
 	void Draw(float elapsed_time) override;
 	void Uninit() override;
+
+	void CollosionUpdate(float elapsed_time);
 
 private:
 	render* Render;
@@ -33,4 +37,5 @@ private:
 	std::unique_ptr<Font> fonts[8];
 	std::unique_ptr<PLAYER> player;
 	std::unique_ptr<STAGE> stage;
+	std::shared_ptr<AudioSource> BGM;
 };

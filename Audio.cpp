@@ -48,8 +48,20 @@ Audio::~Audio()
 }
 
 // オーディオソース読み込み
-std::unique_ptr<AudioSource> Audio::LoadAudioSource(const char* filename)
+std::shared_ptr<AudioSource> Audio::LoadAudioSource(const char* filename)
 {
+	// 指定されたファイル名のモデルが既に読み込まれているかどうかをチェック
+	auto it = audioSources.find(filename);
+	if (it != audioSources.end())
+	{
+		// 読み込まれている場合はそのまま返す
+		return it->second;
+	}
+
+
+	// 読み込まれていない場合は新規に読み込む
 	std::shared_ptr<AudioResource> resource = std::make_shared<AudioResource>(filename);
-	return std::make_unique<AudioSource>(xaudio, resource);
+	auto source = std::make_shared<AudioSource>(xaudio, resource);
+	audioSources[filename] = source;
+	return source;
 }
