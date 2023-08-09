@@ -22,5 +22,5 @@ private:
 	std::unique_ptr<Font> Fonts;
 	render* Render;
 
-	std::shared_ptr<AudioSource> BGM;
+	std::unique_ptr<AudioSource> BGM;
 };

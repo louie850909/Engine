@@ -19,6 +19,8 @@ bool framework::initialize()
 
 	Render.initialize();
 	Render.set();
+
+	Audio::Instance();
 	
 	EffectManager::Instance().Init(&Render);
 	

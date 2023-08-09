@@ -46,5 +46,5 @@ private:
 	void updateJump(float elapsed_time);
 
 	Effect* effect = nullptr;
-	std::shared_ptr<AudioSource> WalkSE;
+	std::unique_ptr<AudioSource> WalkSE;
 };

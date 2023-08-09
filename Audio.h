@@ -20,7 +20,7 @@ public:
 	}
 
 	// オーディオソース読み込み
-	std::shared_ptr<AudioSource> LoadAudioSource(const char* filename);
+	std::unique_ptr<AudioSource> LoadAudioSource(const char* filename);
 
 private:
 	Audio();
@@ -28,7 +28,4 @@ private:
 
 	IXAudio2*				xaudio = nullptr;
 	IXAudio2MasteringVoice* masteringVoice = nullptr;
-
-	using AudioSourceMap = std::map<std::string, std::shared_ptr<AudioSource>>;
-	AudioSourceMap audioSources;
 };

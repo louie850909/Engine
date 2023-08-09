@@ -12,6 +12,7 @@
 #include "render.h"
 #include "camera.h"
 #include "Input.h"
+#include "Audio.h"
 
 #ifdef USE_IMGUI
 #include "imgui/imgui.h"

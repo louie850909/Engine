@@ -37,5 +37,5 @@ private:
 	std::unique_ptr<Font> fonts[8];
 	std::unique_ptr<PLAYER> player;
 	std::unique_ptr<STAGE> stage;
-	std::shared_ptr<AudioSource> BGM;
+	std::unique_ptr<AudioSource> BGM;
 };
