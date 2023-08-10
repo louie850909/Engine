@@ -1000,7 +1000,7 @@ void skinned_mesh::draw(render Render, XMFLOAT4 material_color, int coordinate_s
 			Render.get_immediate_context()->DrawIndexed(subset.index_count, subset.start_index_location, 0);
 		}
 	}
-#ifdef AST
+#ifdef _DEBUG
 	for (const mesh& mesh : meshes)
 	{
 		uint32_t stride{ sizeof(XMFLOAT3) };

@@ -32,6 +32,9 @@ void SceneGame::Init()
 	stage = std::make_unique<STAGE>(Render);
 	stage->initialize();
 
+	snowball = std::make_unique<Snowball>(Render);
+	snowball->initialize(XMFLOAT3(110, 0, -10), 10.0f);
+
 	fonts[0] = std::make_unique<Font>(Render->get_device(), ".\\resources\\fonts\\test\\test.fnt", 1024);
 
 	BGM = Audio::Instance().LoadAudioSource(".\\resources\\BGM\\BGM_Game.wav");
@@ -46,6 +49,7 @@ void SceneGame::Update(float elapsed_time)
 
 	light->update();
 	player->update(elapsed_time);
+	snowball->update(elapsed_time);
 	Fountains[0]->update(elapsed_time);
 	rains[0]->update(elapsed_time);
 	fires[0]->update(elapsed_time);
@@ -73,6 +77,7 @@ void SceneGame::Draw(float elapsed_time)
 	Render->set_view_projection_matrix(&CAMERA::Instance(), light.get());
 
 	player->draw(elapsed_time);
+	snowball->draw(elapsed_time);
 	stage->draw(elapsed_time);
 	billboards[0]->draw(*Render);
 	Fountains[0]->draw(*Render);
@@ -104,6 +109,7 @@ void SceneGame::Uninit()
 	BGM->Stop();
 	light.release();
 	player.release();
+	snowball.release();
 	stage.release();
 	for (int i = 0; i < 8; i++)
 	{

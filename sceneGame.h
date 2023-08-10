@@ -11,6 +11,7 @@
 #include "fire.h"
 #include "Audio.h"
 #include "AudioResource.h"
+#include "snowball.h"
 
 class SceneGame : public Scene
 {
@@ -38,4 +39,5 @@ private:
 	std::unique_ptr<PLAYER> player;
 	std::unique_ptr<STAGE> stage;
 	std::unique_ptr<AudioSource> BGM;
+	std::unique_ptr<Snowball> snowball;
 };
