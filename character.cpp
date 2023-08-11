@@ -84,6 +84,68 @@ void Character::updateAnimation(float elapsed_time)
 	}
 }
 
+void Character::updateplaceIndex(const STAGE* stage)
+{
+	// ˆÊ’u”»’è
+	placeIndex = 0;
+	if (position.x < stage->center.x && position.y < stage->center.y && position.z < stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[0].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[0].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[0].z) ? 4 : 0;
+		placeIndex = 0 * 8 + placeIndex;
+	}
+	else if (position.x > stage->center.x && position.y < stage->center.y && position.z < stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[1].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[1].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[1].z) ? 4 : 0;
+		placeIndex = 1 * 8 + placeIndex;
+	}
+	else if (position.x < stage->center.x && position.y > stage->center.y && position.z < stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[2].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[2].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[2].z) ? 4 : 0;
+		placeIndex = 2 * 8 + placeIndex;
+	}
+	else if (position.x > stage->center.x && position.y > stage->center.y && position.z < stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[3].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[3].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[3].z) ? 4 : 0;
+		placeIndex = 3 * 8 + placeIndex;
+	}
+	else if (position.x < stage->center.x && position.y < stage->center.y && position.z > stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[4].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[4].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[4].z) ? 4 : 0;
+		placeIndex = 4 * 8 + placeIndex;
+	}
+	else if (position.x > stage->center.x && position.y < stage->center.y && position.z > stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[5].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[5].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[5].z) ? 4 : 0;
+		placeIndex = 5 * 8 + placeIndex;
+	}
+	else if (position.x < stage->center.x && position.y > stage->center.y && position.z > stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[6].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[6].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[6].z) ? 4 : 0;
+		placeIndex = 6 * 8 + placeIndex;
+	}
+	else if (position.x > stage->center.x && position.y > stage->center.y && position.z > stage->center.z)
+	{
+		placeIndex |= (position.x < stage->centers[7].x) ? 1 : 0;
+		placeIndex |= (position.y < stage->centers[7].y) ? 2 : 0;
+		placeIndex |= (position.z < stage->centers[7].z) ? 4 : 0;
+		placeIndex = 7 * 8 + placeIndex;
+	}
+}
+
 void Character::drawDebugPrimitive()
 {
 	DebugRenderer* debugRenderer = Render->get_debug_renderer();

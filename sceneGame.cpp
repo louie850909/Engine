@@ -3,6 +3,7 @@
 #include "sceneLogo.h"
 #include "EffectManager.h"
 #include "collision.h"
+#include "physic.h"
 
 SceneGame::SceneGame(render* Render)
 {
@@ -93,6 +94,7 @@ void SceneGame::Draw(float elapsed_time)
 
 #ifdef _DEBUG
 	player->drawDebugPrimitive();
+	snowball->drawDebugPrimitive();
 	Render->get_debug_renderer()->Render(Render->get_immediate_context(), v, p);
 #endif // DEBUG
 
@@ -129,22 +131,7 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 		HitResult player_hitResult;
 
 		// プレイヤーの位置判定
-		if(player->position.x < stage->center.x && player->position.y < stage->center.y && player->position.z < stage->center.z)
-			player->placeIndex = 0;
-		else if (player->position.x > stage->center.x && player->position.y < stage->center.y && player->position.z < stage->center.z)
-			player->placeIndex = 1;
-		else if (player->position.x < stage->center.x && player->position.y > stage->center.y && player->position.z < stage->center.z)
-			player->placeIndex = 2;
-		else if (player->position.x > stage->center.x && player->position.y > stage->center.y && player->position.z < stage->center.z)
-			player->placeIndex = 3;
-		else if (player->position.x < stage->center.x && player->position.y < stage->center.y && player->position.z > stage->center.z)
-			player->placeIndex = 4;
-		else if (player->position.x > stage->center.x && player->position.y < stage->center.y && player->position.z > stage->center.z)
-			player->placeIndex = 5;
-		else if (player->position.x < stage->center.x && player->position.y > stage->center.y && player->position.z > stage->center.z)
-			player->placeIndex = 6;
-		else if (player->position.x > stage->center.x && player->position.y > stage->center.y && player->position.z > stage->center.z)
-			player->placeIndex = 7;
+		player->updateplaceIndex(stage.get());
 
 		// 床判定
 		if (Collision::VsStage(XMFLOAT3(player->position.x, player->position.y + 15.0f, player->position.z),
@@ -152,10 +139,7 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 		{
 			player->position.y = player_hitResult.Pos.y;
 		}
-		else
-		{
-			player->position.y -= 9.8f * 10 * elapsed_time;
-		}
+		
 
 		// 壁判定
 		if (Collision::VsStage(XMFLOAT3(player->position.x, player->position.y + 10.0f, player->position.z),
@@ -165,4 +149,37 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 			player->position = player->prePos;
 		}
 	}
+
+	// 雪玉とステージの当たり判定
+	{
+		HitResult snowball_hitResult;
+
+		// 雪玉の位置判定
+		snowball->updateplaceIndex(stage.get());
+
+		// 床判定
+		if (Collision::VsStage(XMFLOAT3(snowball->position.x, snowball->position.y + 15.0f, snowball->position.z),
+			XMFLOAT3(snowball->position.x, snowball->position.y - 1.0f, snowball->position.z), stage->subDivisions[snowball->placeIndex], snowball_hitResult))
+		{
+			snowball->position.y = snowball_hitResult.Pos.y;
+		}
+
+		// 壁判定
+		if (Collision::VsStage(XMFLOAT3(snowball->position.x, snowball->position.y + 10.0f, snowball->position.z),
+			XMFLOAT3(snowball->position.x + sinf(snowball->rotation.y) * 3, snowball->position.y + 5.0f, snowball->position.z + cosf(snowball->rotation.y) * 3),
+			stage->subDivisions[snowball->placeIndex], snowball_hitResult))
+		{
+			snowball->position = snowball->prePos;
+		}
+	}
+
+	player->getMesh()->position = player->position;
+	player->getMesh()->rotation = player->rotation;
+	player->getMesh()->rotation.y += XM_PI;
+	player->getMesh()->scale = player->scale;
+
+	snowball->getMesh()->position = snowball->position;
+	snowball->getMesh()->rotation = snowball->rotation;
+	snowball->getMesh()->rotation.y += XM_PI;
+	snowball->getMesh()->scale = snowball->scale;
 }

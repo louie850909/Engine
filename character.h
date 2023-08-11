@@ -1,5 +1,6 @@
 #pragma once
 #include "model.h"
+#include "stage.h"
 
 class Character
 {
@@ -12,6 +13,12 @@ public:
 	~Character();
 
 	void drawDebugPrimitive();
+	std::shared_ptr<skinned_mesh> getMesh() { return mesh; }
+
+	void updateplaceIndex(const STAGE* stage);
+	int placeIndex = 0;
+	XMFLOAT3 prePos;
+
 protected:
 	render* Render;
 

@@ -17,6 +17,7 @@ public :
 	XMFLOAT3 rotation;
 	XMFLOAT3 scale;
 	XMFLOAT3 center;
+	XMFLOAT3 centers[8];
 
 	std::shared_ptr<static_mesh> mesh;
 	std::shared_ptr<skinned_mesh> skinnedMesh;
@@ -29,6 +30,6 @@ public :
 	void draw(float elapsed_time);
 	void uninitialize();
 
-	std::vector<triangle> subDivisions[8];
+	std::vector<triangle> subDivisions[64];
 private:
 };

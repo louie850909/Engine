@@ -1,7 +1,7 @@
 #include "snowball.h"
 #include "modelManager.h"
 
-Snowball::Snowball(render* Render)
+Snowball::Snowball(render* Render) : Character(Render)
 {
 	this->Render = Render;
 }
@@ -14,6 +14,7 @@ Snowball::~Snowball()
 void Snowball::initialize(XMFLOAT3 pos, float radius)
 {
 	position = XMFLOAT3(pos.x, pos.y + radius, pos.z);
+	rotation = XMFLOAT3(0, 0, 0);
 	scale = XMFLOAT3(radius, radius, radius);
 	this->radius = radius;
 
@@ -30,11 +31,6 @@ void Snowball::draw(float elapsed_time)
 {
 	animation::keyframe keyframe;
 	mesh->draw(*Render, XMFLOAT4(1, 1, 1, 1), skinned_mesh::LHS_YUP, &keyframe);
-
-#ifdef _DEBUG
-	drawDebugPrimitive();
-#endif // _DEBUG
-
 }
 
 void Snowball::uninitialize()

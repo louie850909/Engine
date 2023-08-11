@@ -23,9 +23,6 @@ public:
 	bool InputMove(float elapsed_time);
 	bool InputJump(float elapsed_time);
 
-	int placeIndex = -1;
-	XMFLOAT3 prePos;
-
 private:
 	enum class State
 	{

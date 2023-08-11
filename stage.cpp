@@ -79,6 +79,14 @@ void STAGE::initialize()
 	}
 
 	center = XMFLOAT3((boxMin.x + boxMax.x) / 2, (boxMin.y + boxMax.y) / 2, (boxMin.z + boxMax.z) / 2);
+	centers[0] = XMFLOAT3((center.x + boxMin.x) / 2, (center.y + boxMin.y) / 2, (center.z + boxMin.z) / 2);
+	centers[1] = XMFLOAT3((center.x + boxMax.x) / 2, (center.y + boxMin.y) / 2, (center.z + boxMin.z) / 2);
+	centers[2] = XMFLOAT3((center.x + boxMin.x) / 2, (center.y + boxMax.x) / 2, (center.z + boxMin.z) / 2);
+	centers[3] = XMFLOAT3((center.x + boxMax.x) / 2, (center.y + boxMax.x) / 2, (center.z + boxMin.z) / 2);
+	centers[4] = XMFLOAT3((center.x + boxMin.x) / 2, (center.y + boxMin.y) / 2, (center.z + boxMax.z) / 2);
+	centers[5] = XMFLOAT3((center.x + boxMax.x) / 2, (center.y + boxMin.y) / 2, (center.z + boxMax.z) / 2);
+	centers[6] = XMFLOAT3((center.x + boxMin.x) / 2, (center.y + boxMax.x) / 2, (center.z + boxMax.z) / 2);
+	centers[7] = XMFLOAT3((center.x + boxMax.x) / 2, (center.y + boxMax.x) / 2, (center.z + boxMax.z) / 2);
 
 	for (const skinned_mesh::mesh m : skinnedMesh->meshes)
 	{
@@ -111,35 +119,195 @@ void STAGE::initialize()
 				if ((t.v0.x < center.x && t.v0.y < center.y && t.v0.z < center.z) ||
 					(t.v1.x < center.x && t.v1.y < center.y && t.v1.z < center.z) ||
 					(t.v2.x < center.x && t.v2.y < center.y && t.v2.z < center.z))
-					subDivisions[0].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[0].x) ? 1 : 0;
+					index |= (t.v0.y < centers[0].y) ? 2 : 0;
+					index |= (t.v0.z < centers[0].z) ? 4 : 0;
+					subDivisions[0 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[0].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[0].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[0].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[0 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[0].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[0].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[0].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[0 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x > center.x && t.v0.y < center.y && t.v0.z < center.z) ||
 					(t.v1.x > center.x && t.v1.y < center.y && t.v1.z < center.z) ||
 					(t.v2.x > center.x && t.v2.y < center.y && t.v2.z < center.z))
-					subDivisions[1].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[1].x) ? 1 : 0;
+					index |= (t.v0.y < centers[1].y) ? 2 : 0;
+					index |= (t.v0.z < centers[1].z) ? 4 : 0;
+					subDivisions[1 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[1].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[1].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[1].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[1 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[1].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[1].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[1].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[1 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x < center.x && t.v0.y > center.y && t.v0.z < center.z) ||
 					(t.v1.x < center.x && t.v1.y > center.y && t.v1.z < center.z) ||
 					(t.v2.x < center.x && t.v2.y > center.y && t.v2.z < center.z))
-					subDivisions[2].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[2].x) ? 1 : 0;
+					index |= (t.v0.y < centers[2].y) ? 2 : 0;
+					index |= (t.v0.z < centers[2].z) ? 4 : 0;
+					subDivisions[2 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[2].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[2].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[2].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[2 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[2].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[2].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[2].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[2 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x > center.x && t.v0.y > center.y && t.v0.z < center.z) ||
 					(t.v1.x > center.x && t.v1.y > center.y && t.v1.z < center.z) ||
 					(t.v2.x > center.x && t.v2.y > center.y && t.v2.z < center.z))
-					subDivisions[3].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[3].x) ? 1 : 0;
+					index |= (t.v0.y < centers[3].y) ? 2 : 0;
+					index |= (t.v0.z < centers[3].z) ? 4 : 0;
+					subDivisions[3 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[3].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[3].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[3].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[3 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[3].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[3].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[3].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[3 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x < center.x && t.v0.y < center.y && t.v0.z > center.z) ||
 					(t.v1.x < center.x && t.v1.y < center.y && t.v1.z > center.z) ||
 					(t.v2.x < center.x && t.v2.y < center.y && t.v2.z > center.z))
-					subDivisions[4].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[4].x) ? 1 : 0;
+					index |= (t.v0.y < centers[4].y) ? 2 : 0;
+					index |= (t.v0.z < centers[4].z) ? 4 : 0;
+					subDivisions[4 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[4].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[4].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[4].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[4 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[4].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[4].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[4].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[4 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x > center.x && t.v0.y < center.y && t.v0.z > center.z) ||
 					(t.v1.x > center.x && t.v1.y < center.y && t.v1.z > center.z) ||
 					(t.v2.x > center.x && t.v2.y < center.y && t.v2.z > center.z))
-					subDivisions[5].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[5].x) ? 1 : 0;
+					index |= (t.v0.y < centers[5].y) ? 2 : 0;
+					index |= (t.v0.z < centers[5].z) ? 4 : 0;
+					subDivisions[5 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[5].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[5].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[5].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[5 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[5].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[5].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[5].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[5 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x < center.x && t.v0.y > center.y && t.v0.z > center.z) ||
 					(t.v1.x < center.x && t.v1.y > center.y && t.v1.z > center.z) ||
 					(t.v2.x < center.x && t.v2.y > center.y && t.v2.z > center.z))
-					subDivisions[6].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[6].x) ? 1 : 0;
+					index |= (t.v0.y < centers[6].y) ? 2 : 0;
+					index |= (t.v0.z < centers[6].z) ? 4 : 0;
+					subDivisions[6 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[6].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[6].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[6].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[6 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[6].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[6].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[6].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[6 * 8 + index3].push_back(t);
+				}
 				if ((t.v0.x > center.x && t.v0.y > center.y && t.v0.z > center.z) ||
 					(t.v1.x > center.x && t.v1.y > center.y && t.v1.z > center.z) ||
 					(t.v2.x > center.x && t.v2.y > center.y && t.v2.z > center.z))
-					subDivisions[7].push_back(t);
+				{
+					int index = 0;
+					index |= (t.v0.x < centers[7].x) ? 1 : 0;
+					index |= (t.v0.y < centers[7].y) ? 2 : 0;
+					index |= (t.v0.z < centers[7].z) ? 4 : 0;
+					subDivisions[7 * 8 + index].push_back(t);
+
+					int index2 = 0;
+					index2 |= (t.v1.x < centers[7].x) ? 1 : 0;
+					index2 |= (t.v1.y < centers[7].y) ? 2 : 0;
+					index2 |= (t.v1.z < centers[7].z) ? 4 : 0;
+					if (index != index2)
+						subDivisions[7 * 8 + index2].push_back(t);
+
+					int index3 = 0;
+					index3 |= (t.v2.x < centers[7].x) ? 1 : 0;
+					index3 |= (t.v2.y < centers[7].y) ? 2 : 0;
+					index3 |= (t.v2.z < centers[7].z) ? 4 : 0;
+					if (index != index3 && index2 != index3)
+						subDivisions[7 * 8 + index3].push_back(t);
+				}
 			}
 		}
 	}

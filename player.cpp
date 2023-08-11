@@ -4,11 +4,12 @@
 #include "camera.h"
 #include "stage.h"
 #include "modelManager.h"
+#include "physic.h"
 
 PLAYER::PLAYER(render* Render) : Character(Render)
 {
 	this->Render = Render;
-	position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	position = XMFLOAT3(0.0f, 10.0f, 0.0f);
 	rotation = XMFLOAT3(0.0f, XM_PI, 0.0f);
 	scale = XMFLOAT3(0.1f, 0.1f, 0.1f);
 	clip_index = 0;
@@ -98,7 +99,7 @@ void PLAYER::uninitialize()
 bool PLAYER::InputMove(float elapsed_time)
 {
 	// ÉLÅ[ì¸óÕÇéÊìæÇ∑ÇÈ
-	GamePad& gamePad = Input::Instance().GetGamePad();
+	GamePad& gamePad = Input::Instance().GetGamePad();                                                
 	float ax = gamePad.GetAxisLX();
 	float ay = gamePad.GetAxisLY();
 	float angle = atan2f(ax, ay);

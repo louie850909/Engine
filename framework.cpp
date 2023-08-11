@@ -21,6 +21,8 @@ bool framework::initialize()
 	Render.set();
 
 	Audio::Instance();
+
+	Physic::getInstance();
 	
 	EffectManager::Instance().Init(&Render);
 	

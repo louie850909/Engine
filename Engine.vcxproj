@@ -53,6 +53,7 @@
     <ClInclude Include="modelManager.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="physic.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="rain.h" />
     <ClInclude Include="render.h" />
@@ -101,6 +102,7 @@
     <ClCompile Include="modelManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="physic.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="rain.cpp" />
     <ClCompile Include="render.cpp" />
