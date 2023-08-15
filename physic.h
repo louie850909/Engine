@@ -1,35 +1,35 @@
 #pragma once
 #include <DirectXMath.h>
+#include <vector>
 using namespace DirectX;
 
 class Physic
 {
-private:
-	Physic() {}
+public:
+	// 力の構造体
+	struct Force
+	{
+		XMFLOAT3 forward;	// 方向
+		float power;		// 力
+	};
+
+	Physic() 
+	{ 
+		velocity = XMFLOAT3(0, 0, 0);
+	}
 	~Physic() {}
 
-public:
-	static Physic& getInstance()
-	{
-		static Physic instance;
-		return instance;
-	}
+	// 速力更新処理
+	void updateVelocity(float elapsed_time, bool isGround);
 
-	// 垂直速力更新処理
-	void updateVerticalVelocity(float elapsed_time);
-	// 水平速力更新処理
-	void updateHorizontalVelocity(float elapsed_time);
-
-	// 垂直位置更新処理
-	XMFLOAT3 updateVerticalPosition(XMFLOAT3 position, float elapsed_time);
-	// 水平位置更新処理
-	XMFLOAT3 updateHorizontalPosition(XMFLOAT3 position, float elapsed_time);
+	// 位置更新処理
+	XMFLOAT3 updateMove(XMFLOAT3 position, float elapsed_time);
 	
 	//　衝撃を与える 
-	void addImpulse(XMFLOAT3 impulse);
+	void addImpulse(Force f);
 
-private:
-	float gravity = -9.8f * 10.0f;
-	float friction = 0.1f;
 	XMFLOAT3 velocity = XMFLOAT3(0, 0, 0);
+private:
+	float gravity = -9.8f * 30.0f;
+	float friction = 0.7f;
 };

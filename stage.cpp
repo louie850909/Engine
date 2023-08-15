@@ -18,7 +18,7 @@ void STAGE::initialize()
 {
 	//mesh = std::make_unique<static_mesh>(Render->get_device(), L".\\resources\\landscape.obj", position, scale, rotation, false);
 	//skinnedMesh = std::make_unique<skinned_mesh>(Render->get_device(), ".\\resources\\testStage\\ExampleStage.fbx", false, position, scale, rotation, 0.0f);
-	skinnedMesh = ModelManager::getInstance().LoadSkinnedMesh(".\\resources\\testStage\\ExampleStage.fbx", Render, false, position, scale, rotation, 0.0f);
+	skinnedMesh = ModelManager::getInstance().LoadSkinnedMesh(".\\resources\\testStage\\ExampleStage.fbx", Render, true, position, scale, rotation, 0.0f);
 
 	// 頂点をワールド座標に変換し、分割する
 	XMMATRIX w, s, r, t;

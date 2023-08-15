@@ -8,6 +8,7 @@
 #include "Effect.h"
 #include "AudioSource.h"
 #include "Audio.h"
+#include "physic.h"
 
 class PLAYER : public Character
 {

@@ -18,4 +18,5 @@ public:
 	void drawDebugPrimitive();
 
 	float radius;
+	XMFLOAT3 drawPos;
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "model.h"
 #include "stage.h"
+#include "physic.h"
 
 class Character
 {
@@ -19,6 +20,12 @@ public:
 	int placeIndex = 0;
 	XMFLOAT3 prePos;
 
+	float collision_radius;
+	float collision_height;
+	std::unique_ptr<Physic> physic;
+
+	bool isGround = false;
+
 protected:
 	render* Render;
 
@@ -30,9 +37,6 @@ protected:
 	const animation::keyframe* blendframes[2];
 	float blendSecond;
 	float blendTick;
-
-	float collision_radius;
-	float collision_height;
 
 	std::shared_ptr<skinned_mesh> mesh;
 

@@ -135,9 +135,14 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 
 		// 床判定
 		if (Collision::VsStage(XMFLOAT3(player->position.x, player->position.y + 15.0f, player->position.z),
-			XMFLOAT3(player->position.x, player->position.y - 1.0f, player->position.z), stage->subDivisions[player->placeIndex], player_hitResult))
+			XMFLOAT3(player->position.x, player->position.y, player->position.z), stage->subDivisions[player->placeIndex], player_hitResult))
 		{
 			player->position.y = player_hitResult.Pos.y;
+			player->isGround = true;
+		}
+		else
+		{
+			player->isGround = false;
 		}
 		
 
@@ -158,28 +163,53 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 		snowball->updateplaceIndex(stage.get());
 
 		// 床判定
-		if (Collision::VsStage(XMFLOAT3(snowball->position.x, snowball->position.y + 15.0f, snowball->position.z),
-			XMFLOAT3(snowball->position.x, snowball->position.y - 1.0f, snowball->position.z), stage->subDivisions[snowball->placeIndex], snowball_hitResult))
+		if (Collision::VsStage(	XMFLOAT3(snowball->position.x, snowball->position.y + snowball->radius, snowball->position.z),
+								snowball->position,
+								stage->subDivisions[snowball->placeIndex], snowball_hitResult))
 		{
 			snowball->position.y = snowball_hitResult.Pos.y;
+			snowball->isGround = true;
+		}
+		else
+		{
+			snowball->isGround = false;
 		}
 
 		// 壁判定
-		if (Collision::VsStage(XMFLOAT3(snowball->position.x, snowball->position.y + 10.0f, snowball->position.z),
-			XMFLOAT3(snowball->position.x + sinf(snowball->rotation.y) * 3, snowball->position.y + 5.0f, snowball->position.z + cosf(snowball->rotation.y) * 3),
+		if (Collision::VsStage(XMFLOAT3(snowball->position.x, snowball->position.y + snowball->radius, snowball->position.z),
+			XMFLOAT3(snowball->position.x + sinf(snowball->rotation.y) * snowball->radius, snowball->position.y + snowball->radius, snowball->position.z + cosf(snowball->rotation.y) * snowball->radius),
 			stage->subDivisions[snowball->placeIndex], snowball_hitResult))
 		{
-			snowball->position = snowball->prePos;
+			// 法線に基づく反射する
+			XMFLOAT3 normal = snowball_hitResult.Normal;
+			XMFLOAT3 in = snowball->physic->velocity;
+			XMFLOAT3 out;
+
+			out.x = in.x - 2.0f * normal.x * XMVectorGetX(XMVector3Dot(XMLoadFloat3(&in), XMLoadFloat3(&normal)));
+			out.y = in.y - 2.0f * normal.y * XMVectorGetX(XMVector3Dot(XMLoadFloat3(&in), XMLoadFloat3(&normal)));
+			out.z = in.z - 2.0f * normal.z * XMVectorGetX(XMVector3Dot(XMLoadFloat3(&in), XMLoadFloat3(&normal)));
+
+			snowball->physic->velocity = out;
+			// 進行方向に向けて回転
+			snowball->rotation.y = atan2f(snowball->physic->velocity.x, snowball->physic->velocity.z);
 		}
 	}
 
-	player->getMesh()->position = player->position;
-	player->getMesh()->rotation = player->rotation;
-	player->getMesh()->rotation.y += XM_PI;
-	player->getMesh()->scale = player->scale;
-
-	snowball->getMesh()->position = snowball->position;
-	snowball->getMesh()->rotation = snowball->rotation;
-	snowball->getMesh()->rotation.y += XM_PI;
-	snowball->getMesh()->scale = snowball->scale;
+	// 雪玉とプレイヤーの当たり判定
+	{
+		if (player->placeIndex == snowball->placeIndex)
+		{
+			if (Collision::CylinderVsCylinder(player->position, player->collision_radius, player->collision_height,
+				snowball->position, snowball->collision_radius, snowball->collision_height))
+			{
+				Physic::Force force;
+				force.forward = XMFLOAT3(snowball->position.x - player->position.x, 10.0f, snowball->position.z - player->position.z);
+				force.power = 1.0f;
+				snowball->isGround = false;
+				snowball->physic->addImpulse(force);
+				// 進行方向に向けて回転
+				snowball->rotation.y = atan2f(snowball->physic->velocity.x, snowball->physic->velocity.z);
+			}
+		}
+	}
 }

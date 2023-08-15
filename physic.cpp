@@ -1,24 +1,37 @@
 #include "physic.h"
 
-void Physic::updateVerticalVelocity(float elapsed_time)
+void Physic::updateVelocity(float elapsed_time, bool isGround)
 {
+	// 重力更新
+	if (!isGround)
+		velocity.y += gravity * elapsed_time;
+	else
+		velocity.y = 0.0f;
 
+	// 摩擦力更新
+	velocity.x *= 1.0f - friction * elapsed_time;
+	velocity.z *= 1.0f - friction * elapsed_time;
+	if(powf(velocity.x, 2) + powf(velocity.z, 2) < 0.01f)
+		velocity.x = velocity.z = 0.0f;
 }
 
-void Physic::updateHorizontalVelocity(float elapsed_time)
+XMFLOAT3 Physic::updateMove(XMFLOAT3 position, float elapsed_time)
 {
+	position.x += velocity.x * elapsed_time;
+	position.y += velocity.y * elapsed_time;
+	position.z += velocity.z * elapsed_time;
+
+	return position;
 }
 
-XMFLOAT3 Physic::updateVerticalPosition(XMFLOAT3 position, float elapsed_time)
+void Physic::addImpulse(Force f)
 {
-	return XMFLOAT3();
-}
+	// 方向を正規化する
+	XMVECTOR v = XMVector3Normalize(XMLoadFloat3(&f.forward));
+	XMStoreFloat3(&f.forward, v);
 
-XMFLOAT3 Physic::updateHorizontalPosition(XMFLOAT3 position, float elapsed_time)
-{
-	return XMFLOAT3();
-}
-
-void Physic::addImpulse(XMFLOAT3 impulse)
-{
+	// 力を加える
+	velocity.x += f.forward.x * f.power;
+	velocity.y += f.forward.y * f.power;
+	velocity.z += f.forward.z * f.power;
 }

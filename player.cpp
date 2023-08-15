@@ -4,7 +4,7 @@
 #include "camera.h"
 #include "stage.h"
 #include "modelManager.h"
-#include "physic.h"
+
 
 PLAYER::PLAYER(render* Render) : Character(Render)
 {
@@ -45,6 +45,8 @@ void PLAYER::initialize()
 
 	effect = new Effect(".\\resources\\Effect\\test3.efk", this->Render);
 	WalkSE = Audio::Instance().LoadAudioSource(".\\resources\\SE\\walk.wav");
+
+	physic = std::make_unique<Physic>();
 }
 
 void PLAYER::update(float elapsed_time)
@@ -66,6 +68,9 @@ void PLAYER::update(float elapsed_time)
 		break;
 	}
 
+	physic->updateVelocity(elapsed_time, isGround);
+	position = physic->updateMove(position, elapsed_time);
+
 #ifdef _DEBUG
 	ImGui::Begin("PLAYER");
 	ImGui::SliderFloat3("Position", &position.x, -1000.0f, 1000.0f, "%.1f");
@@ -80,15 +85,15 @@ void PLAYER::update(float elapsed_time)
 #endif // _DEBUG
 
 	updateAnimation(elapsed_time);
-
-	mesh.get()->position = position;
-	mesh.get()->rotation = rotation;
-	mesh->rotation.y += XM_PI;
-	mesh.get()->scale = scale;
 }
 
 void PLAYER::draw(float elapsed_time)
 {
+	mesh.get()->position = position;
+	mesh.get()->rotation = rotation;
+	mesh->rotation.y += XM_PI;
+	mesh.get()->scale = scale;
+
 	mesh->draw(*Render, XMFLOAT4(1, 1, 1, 1), skinned_mesh::RHS_YUP, &keyframe);
 }
 
@@ -166,6 +171,13 @@ void PLAYER::updateRun(float elapsed_time)
 void PLAYER::toJump()
 {
 	state = State::Jump;
+	isGround = false;
+	
+	Physic::Force force;
+	force.forward = XMFLOAT3(0,1,0);
+	force.power = 100.0f;
+	physic->addImpulse(force);
+
 	blendframes[0] = &keyframe;
 	blendframes[1] = &mesh->animation_clips.at((int)State::Jump).sequence.at(0);
 	playAnimation((int)State::Jump, false, 0.05f);
