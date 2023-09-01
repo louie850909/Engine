@@ -322,6 +322,8 @@ public:
 
 	virtual ~skinned_mesh();
 
+	void GetNodesWithName(FbxNode* pNode, const char* name, std::vector<FbxNode*>& outNodes);
+
 	void fetch_meshes(FbxScene* fbx_scene, std::vector<mesh>& meshes);
 	void fetch_materials(FbxScene* fbx_scene, std::unordered_map<uint64_t, material>& materials);
 	void fetch_skeleton(FbxMesh* fbx_mesh, skeleton& bind_pose);

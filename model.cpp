@@ -601,6 +601,22 @@ skinned_mesh::~skinned_mesh()
 	bbox_pixel_shader->Release();
 }
 
+void skinned_mesh::GetNodesWithName(FbxNode* pNode, const char* name, std::vector<FbxNode*>& outNodes)
+{
+	if (pNode)
+	{
+		if (strcmp(pNode->GetName(), name) == 0)
+		{
+			outNodes.push_back(pNode);
+		}
+
+		for (int i = 0; i < pNode->GetChildCount(); i++)
+		{
+			GetNodesWithName(pNode->GetChild(i), name, outNodes);
+		}
+	}
+}
+
 void skinned_mesh::fetch_meshes(FbxScene* fbx_scene, std::vector<mesh>& meshes)
 {
 	for (const scene::node& node : scene_view.nodes)
@@ -610,7 +626,19 @@ void skinned_mesh::fetch_meshes(FbxScene* fbx_scene, std::vector<mesh>& meshes)
 			continue;
 		}
 
-		FbxNode* fbx_node{ fbx_scene->FindNodeByName(node.name.c_str()) };
+		std::vector<FbxNode*> nodes;
+		GetNodesWithName(fbx_scene->GetRootNode(), node.name.c_str(), nodes);
+
+		FbxNode* fbx_node = nullptr;
+		for (FbxNode* n : nodes)
+		{
+			if (n->GetUniqueID() == node.unique_id)
+			{
+				fbx_node = n;
+				break;
+			}
+		}
+
 		FbxMesh * fbx_mesh{ fbx_node->GetMesh() };
 		
 		mesh & mesh{ meshes.emplace_back() };
@@ -732,7 +760,18 @@ void skinned_mesh::fetch_materials(FbxScene* fbx_scene, std::unordered_map<uint6
 	for (size_t node_index = 0; node_index < node_count; ++node_index)
 	{
 		const scene::node & node{ scene_view.nodes.at(node_index) };
-		const FbxNode * fbx_node{ fbx_scene->FindNodeByName(node.name.c_str()) };
+		
+		std::vector<FbxNode*> nodes;
+		GetNodesWithName(fbx_scene->GetRootNode(), node.name.c_str(), nodes);
+		FbxNode* fbx_node = nullptr;
+		for (FbxNode* n : nodes)
+		{
+			if (n->GetUniqueID() == node.unique_id)
+			{
+				fbx_node = n;
+				break;
+			}
+		}
 		
 		const int material_count{ fbx_node->GetMaterialCount() };
 
