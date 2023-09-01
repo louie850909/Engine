@@ -29,6 +29,7 @@
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="fire.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="fountain.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fire.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="fountain.cpp" />

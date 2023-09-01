@@ -30,6 +30,9 @@ void SceneGame::Init()
 	player = std::make_unique<PLAYER>(Render);
 	player->initialize();
 
+	enemy = std::make_unique<ENEMY>(Render);
+	enemy->initialize();
+
 	stage = std::make_unique<STAGE>(Render);
 	stage->initialize();
 
@@ -50,6 +53,7 @@ void SceneGame::Update(float elapsed_time)
 
 	light->update();
 	player->update(elapsed_time);
+	enemy->update(elapsed_time);
 	snowball->update(elapsed_time);
 	Fountains[0]->update(elapsed_time);
 	rains[0]->update(elapsed_time);
@@ -78,6 +82,7 @@ void SceneGame::Draw(float elapsed_time)
 	Render->set_view_projection_matrix(&CAMERA::Instance(), light.get());
 
 	player->draw(elapsed_time);
+	enemy->draw(elapsed_time);
 	snowball->draw(elapsed_time);
 	stage->draw(elapsed_time);
 	billboards[0]->draw(*Render);
@@ -111,6 +116,7 @@ void SceneGame::Uninit()
 	BGM->Stop();
 	light.release();
 	player.release();
+	enemy.release();
 	snowball.release();
 	stage.release();
 	for (int i = 0; i < 8; i++)
@@ -210,6 +216,34 @@ void SceneGame::CollosionUpdate(float elapsed_time)
 				// 進行方向に向けて回転
 				snowball->rotation.y = atan2f(snowball->physic->velocity.x, snowball->physic->velocity.z);
 			}
+		}
+	}
+
+	// エネミーとステージの当たり判定
+	{
+		HitResult enemy_hitResult;
+
+		// エネミーの位置判定
+		enemy->updateplaceIndex(stage.get());
+
+		// 床判定
+		if (Collision::VsStage(XMFLOAT3(enemy->position.x, enemy->position.y + 15.0f, enemy->position.z),
+			XMFLOAT3(enemy->position.x, enemy->position.y, enemy->position.z), stage->subDivisions[enemy->placeIndex], enemy_hitResult))
+		{
+			enemy->position.y = enemy_hitResult.Pos.y;
+			enemy->isGround = true;
+		}
+		else
+		{
+			enemy->isGround = false;
+		}
+
+		// 壁判定
+		if (Collision::VsStage(XMFLOAT3(enemy->position.x, enemy->position.y + 10.0f, enemy->position.z),
+			XMFLOAT3(enemy->position.x + sinf(enemy->rotation.y) * 3, enemy->position.y + 5.0f, enemy->position.z + cosf(enemy->rotation.y) * 3),
+			stage->subDivisions[enemy->placeIndex], enemy_hitResult))
+		{
+			enemy->position = enemy->prePos;
 		}
 	}
 }
