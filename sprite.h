@@ -14,15 +14,15 @@ public:
 	float height;
 
 
-	sprite(render r, const wchar_t* filename);
+	sprite(render& r, const wchar_t* filename);
 	~sprite();
 
-	void renderTopLeft(render Render,
+	void renderTopLeft(render& Render,
 		XMFLOAT2 pos, float width, float height,
 		float r, float g, float b, float a,
 		float angle/*degree*/);
 
-	void renderTopLeft(render RenderR,
+	void renderTopLeft(render& RenderR,
 		XMFLOAT2 pos, float width, float height,
 		float r, float g, float b, float a,
 		float angle/*degree*/,

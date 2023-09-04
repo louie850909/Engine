@@ -1,6 +1,6 @@
 #include "particle.h"
 
-Particle::Particle(render r, float width, float height, int maxInstanceCount, bool isAddBlend, bool isDepthTest)
+Particle::Particle(render& r, float width, float height, int maxInstanceCount, bool isAddBlend, bool isDepthTest)
 {
 	this->position = { 0,0,0 };
 	this->scale = { 1,1,1 };
@@ -105,7 +105,7 @@ Particle::Particle(render r, float width, float height, int maxInstanceCount, bo
 	hr = r.get_device()->CreateBuffer(&instance_buffer_desc, &subresource_data, &instance_buffer);
 }
 
-void Particle::draw(render r)
+void Particle::draw(render& r)
 {
 	if (isAddBlend)
 	{

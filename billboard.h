@@ -11,10 +11,10 @@ class Billboard : public GAME_OBJECT
 	};
 
 public:
-	Billboard(render r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 scl, float width, float height, bool instancing = false, int maxInstanceCount = 0);
+	Billboard(render& r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 scl, float width, float height, bool instancing = false, int maxInstanceCount = 0);
 	~Billboard(){}
 
-	void draw(render r);
+	void draw(render& r);
 	std::vector<INSTANCE> instances;
 
 private:

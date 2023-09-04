@@ -17,7 +17,7 @@ inline void rotate(float& x, float& y, float center_x, float center_y, float cos
 	y += center_y;
 }
 
-sprite::sprite(render r, const wchar_t* filename)
+sprite::sprite(render& r, const wchar_t* filename)
 {
 	// 頂点情報のセット
 	vertex vertices[]
@@ -91,12 +91,12 @@ sprite::~sprite()
 	shader_resource_view.Get()->Release();
 }
 
-void sprite::renderTopLeft(render Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree)
+void sprite::renderTopLeft(render& Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree)
 {
 	renderTopLeft(Render, pos, width, height, r, g, b, a, degree, 0, 0, 1, 1);
 }
 
-void sprite::renderTopLeft(render Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
+void sprite::renderTopLeft(render& Render, XMFLOAT2 pos, float width, float height, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
 {
 	this->width = width;
 	this->height = height;

@@ -17,7 +17,7 @@ inline void rotate(float& x, float& y, float center_x, float center_y, float cos
 	y += center_y;
 }
 
-sprite_batch::sprite_batch(render Render, const wchar_t* filename, size_t max_sprites) : max_vertices(max_sprites * 6)
+sprite_batch::sprite_batch(render& Render, const wchar_t* filename, size_t& max_sprites) : max_vertices(max_sprites * 6)
 {
 	HRESULT hr = { S_OK };
 
@@ -79,12 +79,12 @@ sprite_batch::~sprite_batch()
 {
 }
 
-void sprite_batch::renderTopLeft(render Render, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float degree)
+void sprite_batch::renderTopLeft(render& Render, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float degree)
 {
 	renderTopLeft(Render, dx, dy, dw, dh, r, g, b, a, degree, 0, 0, 1, 1);
 }
 
-void sprite_batch::renderTopLeft(render Render, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
+void sprite_batch::renderTopLeft(render& Render, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float degree, float tx, float ty, float tw, float th)
 {
 	// スクリーン（ビューポート）のサイズを取得する
 	D3D11_VIEWPORT viewport{};

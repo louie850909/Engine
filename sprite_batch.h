@@ -10,7 +10,7 @@
 class sprite_batch : public GAME_OBJECT
 {
 public:
-	sprite_batch(render Render, const wchar_t* filename, size_t max_sprites);
+	sprite_batch(render& Render, const wchar_t* filename, size_t& max_sprites);
 	~sprite_batch();
 
 	D3D11_TEXTURE2D_DESC texture2d_desc;
@@ -18,12 +18,12 @@ public:
 	const size_t max_vertices;
 	std::vector<vertex> vertices;
 
-	void renderTopLeft(render Render,
+	void renderTopLeft(render& Render,
 		float dx, float dy, float dw, float dh,
 		float r, float g, float b, float a,
 		float angle/*degree*/);
 
-	void renderTopLeft(render Render,
+	void renderTopLeft(render& Render,
 		float dx, float dy, float dw, float dh,
 		float r, float g, float b, float a,
 		float angle/*degree*/,

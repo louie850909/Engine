@@ -1,6 +1,6 @@
 #include "billboard.h"
 
-Billboard::Billboard(render r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 scl, float width, float height, bool instancing, int maxInstanceCount)
+Billboard::Billboard(render& r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 scl, float width, float height, bool instancing, int maxInstanceCount)
 {
 	this->position = pos;
 	this->scale = scl;
@@ -125,7 +125,7 @@ Billboard::Billboard(render r, const wchar_t* filename, XMFLOAT3 pos, XMFLOAT3 s
 	}
 }
 
-void Billboard::draw(render r)
+void Billboard::draw(render& r)
 {
 	// シェーダー リソースのバインド
 	r.get_immediate_context()->PSSetShaderResources(0, 1, shader_resource_view.GetAddressOf());
