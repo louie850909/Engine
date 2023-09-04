@@ -903,7 +903,20 @@ void skinned_mesh::fetch_animation(FbxScene* fbx_scene, std::vector<animation>& 
 			keyframe.nodes.resize(node_count);
 			for (size_t node_index = 0; node_index < node_count; ++node_index)
 			{
-				FbxNode* fbx_node{ fbx_scene->FindNodeByName(scene_view.nodes.at(node_index).name.c_str()) };
+				const scene::node& node{ scene_view.nodes.at(node_index) };
+
+				std::vector<FbxNode*> nodes;
+				GetNodesWithName(fbx_scene->GetRootNode(), node.name.c_str(), nodes);
+				FbxNode* fbx_node = nullptr;
+				for (FbxNode* n : nodes)
+				{
+					if (n->GetUniqueID() == node.unique_id)
+					{
+						fbx_node = n;
+						break;
+					}
+				}
+
 				if (fbx_node)
 				{
 					animation::keyframe::node & node{ keyframe.nodes.at(node_index) };
