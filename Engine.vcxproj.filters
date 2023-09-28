@@ -19,405 +19,411 @@
     <Filter Include="HLSL">
       <UniqueIdentifier>{83860ce2-5018-4588-98ec-ebd6d328dff9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System">
+    <Filter Include="ソース ファイル\Framework">
       <UniqueIdentifier>{671ad191-794e-4fb8-8868-6b4e8da5c991}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\System">
+    <Filter Include="ソース ファイル\App">
+      <UniqueIdentifier>{c501f754-6b5d-4532-aae6-931815159da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Framework">
       <UniqueIdentifier>{25401e24-71e6-47cf-b224-2c98df8bbdf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\App">
+      <UniqueIdentifier>{c80f6a00-04e9-42d7-a30e-88ea4de8992d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="imgui\imgui_internal.h">
+    <ClInclude Include="Library\imgui\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imstb_rectpack.h">
+    <ClInclude Include="Library\imgui\imgui.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imstb_textedit.h">
+    <ClInclude Include="Library\imgui\imgui_impl_dx11.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imstb_truetype.h">
+    <ClInclude Include="Library\imgui\imgui_impl_win32.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imconfig.h">
+    <ClInclude Include="Library\imgui\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imgui.h">
+    <ClInclude Include="Library\imgui\imstb_rectpack.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imgui_impl_dx11.h">
+    <ClInclude Include="Library\imgui\imstb_textedit.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imgui_impl_win32.h">
+    <ClInclude Include="Library\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\sprite_batch.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\texture.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="stage.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\Audio.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sceneTitle.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\AudioResource.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sceneGame.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\AudioSource.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sceneLoading.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\billboard.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\camera.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\character.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="game_object.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\collision.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="GamePad.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\DebugRenderer.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="geometric_primitive.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\Effect.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="high_resolution_timer.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\EffectManager.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\Font.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\framework.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="misc.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\game_object.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\GamePad.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\geometric_primitive.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="render.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\high_resolution_timer.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\Input.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\Logger.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sprite.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\misc.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sprite_batch.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\model.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\modelManager.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\Mouse.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="character.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\particle.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\physic.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="modelManager.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\render.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="DebugRenderer.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\scene.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\sceneManager.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sceneManager.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\shader.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="sceneLogo.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\sprite.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\enemy.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="AudioResource.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\fire.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="AudioSource.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\fountain.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\player.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="billboard.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\rain.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="particle.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="App\sceneGame.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="fountain.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="App\sceneLoading.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="rain.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="App\sceneLogo.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="fire.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="App\sceneTitle.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="snowball.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="App\snowball.h">
+      <Filter>ヘッダー ファイル\App</Filter>
     </ClInclude>
-    <ClInclude Include="physic.h">
-      <Filter>ヘッダー ファイル\System</Filter>
+    <ClInclude Include="Framework\light.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Framework\stage.h">
+      <Filter>ヘッダー ファイル\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="imgui\imgui_ja_gryph_ranges.cpp">
+    <ClCompile Include="Library\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_widgets.cpp">
+    <ClCompile Include="Library\imgui\imgui_draw.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui.cpp">
+    <ClCompile Include="Library\imgui\imgui_impl_dx11.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_draw.cpp">
+    <ClCompile Include="Library\imgui\imgui_impl_win32.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_impl_dx11.cpp">
+    <ClCompile Include="Library\imgui\imgui_ja_gryph_ranges.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_impl_win32.cpp">
+    <ClCompile Include="Library\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\sprite_batch.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="stage.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\texture.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sceneTitle.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\Audio.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sceneGame.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\AudioResource.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sceneLoading.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\AudioSource.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\billboard.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="framework.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\camera.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="game_object.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\character.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="GamePad.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\collision.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="geometric_primitive.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\DebugRenderer.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\Effect.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\EffectManager.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\Font.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\framework.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\game_object.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="render.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\GamePad.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="shader.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\geometric_primitive.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\Input.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sprite_batch.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\Logger.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\main.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\model.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\modelManager.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="character.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\Mouse.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\particle.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="modelManager.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\physic.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sceneManager.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\render.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="DebugRenderer.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\sceneManager.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\shader.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="sceneLogo.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\sprite.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\enemy.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="AudioResource.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\fire.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="AudioSource.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\fountain.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\player.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="billboard.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\rain.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="particle.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="App\sceneGame.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="fountain.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="App\sceneLoading.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="rain.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="App\sceneLogo.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="fire.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="App\sceneTitle.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="snowball.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="App\snowball.cpp">
+      <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="physic.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Framework\light.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Framework\stage.cpp">
+      <Filter>ソース ファイル\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bbox.hlsli">
+    <None Include="HLSL\Debug.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="geometric_primitive.hlsli">
+    <None Include="HLSL\Font.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="skinned_mesh.hlsli">
+    <None Include="HLSL\geometric_primitive.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="sprite.hlsli">
+    <None Include="HLSL\instancingBillboard.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="static_mesh.hlsli">
+    <None Include="HLSL\MatrixOperation.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="Font.hlsli">
+    <None Include="HLSL\particle.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="Debug.hlsli">
+    <None Include="HLSL\skinned_mesh.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="Billboard.hlsli">
+    <None Include="HLSL\sprite.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="instancingBillboard.hlsli">
+    <None Include="HLSL\static_mesh.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="MatrixOperation.hlsli">
+    <None Include="HLSL\bbox.hlsli">
       <Filter>HLSL</Filter>
     </None>
-    <None Include="particle.hlsli">
+    <None Include="HLSL\Billboard.hlsli">
       <Filter>HLSL</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="bbox_ps.hlsl">
+    <FxCompile Include="HLSL\DebugPS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="bbox_vs.hlsl">
+    <FxCompile Include="HLSL\DebugVS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="geometric_primitive_ps.hlsl">
+    <FxCompile Include="HLSL\Font_PS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="geometric_primitive_vs.hlsl">
+    <FxCompile Include="HLSL\Font_VS.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="skinned_mesh_ps.hlsl">
+    <FxCompile Include="HLSL\geometric_primitive_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="skinned_mesh_vs.hlsl">
+    <FxCompile Include="HLSL\geometric_primitive_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="sprite_ps.hlsl">
+    <FxCompile Include="HLSL\instancingBillboard_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="sprite_vs.hlsl">
+    <FxCompile Include="HLSL\instancingBillboard_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="static_mesh_ps.hlsl">
+    <FxCompile Include="HLSL\particle_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="static_mesh_vs.hlsl">
+    <FxCompile Include="HLSL\particle_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Font_PS.hlsl">
+    <FxCompile Include="HLSL\skinned_mesh_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Font_VS.hlsl">
+    <FxCompile Include="HLSL\skinned_mesh_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="DebugVS.hlsl">
+    <FxCompile Include="HLSL\sprite_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="DebugPS.hlsl">
+    <FxCompile Include="HLSL\sprite_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Billboard_ps.hlsl">
+    <FxCompile Include="HLSL\static_mesh_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Billboard_vs.hlsl">
+    <FxCompile Include="HLSL\static_mesh_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="instancingBillboard_vs.hlsl">
+    <FxCompile Include="HLSL\bbox_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="instancingBillboard_ps.hlsl">
+    <FxCompile Include="HLSL\bbox_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="particle_vs.hlsl">
+    <FxCompile Include="HLSL\Billboard_ps.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="particle_ps.hlsl">
+    <FxCompile Include="HLSL\Billboard_vs.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>
